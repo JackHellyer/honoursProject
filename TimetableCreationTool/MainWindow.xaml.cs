@@ -25,9 +25,5 @@ namespace TimetableCreationTool
             InitializeComponent();
         }
 
-        public void test()
-        {
-
-        }
     }
 }
