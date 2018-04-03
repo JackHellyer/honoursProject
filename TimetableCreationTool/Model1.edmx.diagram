@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="60b4dd5d1f5a4a7593f2678618fbc810" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="timetableCreationModel.Course" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetableCreationModel.Lecturer" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetableCreationModel.Module" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetableCreationModel.Room" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetableCreationModel.Timetable" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="timetableCreationModel.FK_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="timetableCreationModel.FK_CourseModules" ManuallyRouted="false" />
+        <AssociationConnector Association="timetableCreationModel.FK_Lecturer" ManuallyRouted="false" />
+        <AssociationConnector Association="timetableCreationModel.FK_Room" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
