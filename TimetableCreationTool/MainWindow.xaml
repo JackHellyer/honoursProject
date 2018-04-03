@@ -15,7 +15,7 @@
                 <MenuItem Header="_File">
                     <MenuItem x:Name="saveTimetable" Header="Save Timetable" HorizontalAlignment="Left"/>
                     <MenuItem x:Name="loadTimetable" Header="Load Timetable" HorizontalAlignment="Left"/>
-                    <MenuItem x:Name="ExitApp" Header="_Exit" HorizontalAlignment="Left" Width="140"/>
+                    <MenuItem x:Name="exitApp" Header="_Exit" HorizontalAlignment="Left" Width="140" Click="menuExit_Click"/>
                 </MenuItem>
                 <MenuItem Header="_Insert">
                     <MenuItem x:Name="csvInsert" Header="Insert using csv file" HorizontalAlignment="Left" Width="200">

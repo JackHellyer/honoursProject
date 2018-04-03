@@ -10,26 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace TimetableCreationTool
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for insertRoomCsv.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class insertRoomCsv : Window
     {
-        public MainWindow()
+        public insertRoomCsv()
         {
             InitializeComponent();
         }
-
-        public void menuExit_Click(object Sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-        
     }
 }
