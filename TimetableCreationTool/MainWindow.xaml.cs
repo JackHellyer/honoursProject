@@ -20,14 +20,26 @@ namespace TimetableCreationTool
     /// </summary>
     public partial class MainWindow : Window
     {
+        private timetableCreationEntities dbcontext;
         public MainWindow()
         {
             InitializeComponent();
         }
 
+
         public void menuExit_Click(object Sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+            
+        }
+
+        public void menuInsertRoomCSV_Click(object Sender, RoutedEventArgs e)
+        {
+            insertRoomCsv irc = new insertRoomCsv();
+
+            bool? result = irc.ShowDialog();
+
+            
         }
 
         

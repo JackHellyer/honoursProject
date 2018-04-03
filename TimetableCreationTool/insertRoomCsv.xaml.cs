@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +13,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace TimetableCreationTool
 {
@@ -23,5 +26,8 @@ namespace TimetableCreationTool
         {
             InitializeComponent();
         }
+
+        
+
     }
 }

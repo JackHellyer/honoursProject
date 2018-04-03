@@ -19,7 +19,7 @@
                 </MenuItem>
                 <MenuItem Header="_Insert">
                     <MenuItem x:Name="csvInsert" Header="Insert using csv file" HorizontalAlignment="Left" Width="200">
-                        <MenuItem x:Name="addRoom" Header="Add Rooms" HorizontalAlignment="Left"/>
+                        <MenuItem x:Name="addRoom" Header="Add Rooms" HorizontalAlignment="Left" Click="menuInsertRoomCSV_Click"/>
                         <MenuItem x:Name="addLecturers" Header="Add Lecturers" HorizontalAlignment="Left"/>
                         <MenuItem x:Name="addCourses" Header="Add Courses" HorizontalAlignment="Left"/>
                         <MenuItem x:Name="addModules" Header="Add Modules" HorizontalAlignment="Left"/>
@@ -33,8 +33,9 @@
                 </MenuItem>
             </Menu>
         </StackPanel>
+        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="84,82,0,0" VerticalAlignment="Top" Height="292" Width="821"/>
 
 
-       
+
     </Grid>
 </Window>
