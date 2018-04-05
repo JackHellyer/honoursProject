@@ -14,8 +14,15 @@
             <Menu Width="Auto" Height="20">
                 <MenuItem Header="_File">
                     <MenuItem x:Name="saveTimetable" Header="Save Timetable" HorizontalAlignment="Left"/>
-                    <MenuItem x:Name="loadTimetable" Header="Load Timetable" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="loadTimetabe" Header="Load Timetable" HorizontalAlignment="Left"/>
                     <MenuItem x:Name="exitApp" Header="_Exit" HorizontalAlignment="Left" Width="140" Click="menuExit_Click"/>
+                </MenuItem>
+                <MenuItem Header="_View">
+                    <MenuItem x:Name="viewRooms" Header="View List of Rooms" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="viewLecturers" Header="View List of Lecturers" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="viewCourses" Header="View List of Courses" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="viewModules" Header="View List of Modules" HorizontalAlignment="Left"/>
+
                 </MenuItem>
                 <MenuItem Header="_Insert">
                     <MenuItem x:Name="csvInsert" Header="Insert using csv file" HorizontalAlignment="Left" Width="200">
@@ -33,13 +40,8 @@
                 </MenuItem>
             </Menu>
         </StackPanel>
-        <ListView x:Name="listView" HorizontalAlignment="Left" Height="210" Margin="104,126,0,0" VerticalAlignment="Top" Width="556">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Button x:Name="newTimetable" Content="New Timetable" HorizontalAlignment="Left" Margin="461,166,0,0" VerticalAlignment="Top" Width="117" Click="newTimetable_Click"/>
+        <Button x:Name="loadTimetable" Content="Load Timetable" HorizontalAlignment="Left" Margin="461,202,0,0" VerticalAlignment="Top" Width="117" Click="loadTimetable_Click"/>
 
 
 
