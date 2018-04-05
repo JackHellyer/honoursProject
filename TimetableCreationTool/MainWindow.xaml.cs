@@ -3,6 +3,8 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,8 +16,9 @@ namespace TimetableCreationTool
     public partial class MainWindow : Window
     {
         private timetableCreationEntities dbcontext;
-        
-        
+        private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
+        private string userMyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,23 +35,65 @@ namespace TimetableCreationTool
         {
             insertRoomCsv irc = new insertRoomCsv();
 
-            //bool? result = irc.ShowDialog();
-            string csvFilePath = @"C:\Users\Jack\Desktop\test.txt";
-            DataTable csvData = getDataTableCSVFile(csvFilePath);
+            bool? result = irc.ShowDialog();
+            
+            DataTable csvData = getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/rooms.txt");
 
+           
             //DataTable csvData = getDataTableCSVFile(@"C:\Users\Jack\Desktop\test.txt");
             InsertDataTableToSQL(csvData);
+            selectIntoDistinct();
+            truncateTempAfterCSVInsert();
             listView.ItemsSource = csvData.DefaultView;
-          
-            
 
+            string userName2 = Environment.UserName;
+            MessageBox.Show(userMyDocumentsPath);
+            System.IO.Directory.CreateDirectory(userMyDocumentsPath + "/Timetable App");
+            createExampleCSVFile();
+             
+        }
 
-
-
-            
+        public void openExternalCSVFile_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(userMyDocumentsPath + "/Timetable App/rooms.txt");
         }
 
 
+
+        public void createExampleCSVFile()
+        {
+            string pathToCreateCSVFile = userMyDocumentsPath + "/Timetable App/rooms.txt";
+           
+            
+                if (File.Exists(pathToCreateCSVFile))
+                {
+
+                }
+                else
+                {
+
+                    try
+                    {
+                        using (FileStream fs = File.Create(pathToCreateCSVFile))
+                        {
+                        Byte[] info = new UTF8Encoding(true).GetBytes("roomCode,capacity,lab");
+                        fs.Write(info, 0, info.Length);
+
+                        }
+                        
+                        
+                    }
+                    catch(Exception ex)
+                    {
+                        Debug.WriteLine(ex.ToString());
+
+                    }
+                    
+                    
+                }
+
+        }
+    
         public DataTable getDataTableCSVFile(string filePath)
         {
             DataTable csvData = new DataTable();
@@ -78,9 +123,11 @@ namespace TimetableCreationTool
 
                         }
                         csvData.Rows.Add(fieldData);
-
+                        
                     }
+                    csvReader.Close();
                 }
+                
             }
             catch( Exception ex)
             {
@@ -90,10 +137,11 @@ namespace TimetableCreationTool
             }
             return csvData;
         }
+        
 
-        static void InsertDataTableToSQL(DataTable csvFileData)
+        public void InsertDataTableToSQL(DataTable csvFileData)
         {
-            using (SqlConnection dbConnection = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30"))
+            using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
 
                 
@@ -101,16 +149,17 @@ namespace TimetableCreationTool
                 if(dbConnection.State == ConnectionState.Open)
                 {
 
-                    MessageBox.Show("success");
+                    MessageBox.Show("connection success");
                     using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
                     {
                         // change this method later to have a string parameter which will hold the destination table
-                        sbc.DestinationTableName = "dbo.Room";
+                        sbc.DestinationTableName = "dbo.roomTemp";
 
                         foreach (var column in csvFileData.Columns)
                      
                         sbc.ColumnMappings.Add(column.ToString(), column.ToString());
                         sbc.WriteToServer(csvFileData);
+                        dbConnection.Close();
                         
                         
 
@@ -118,7 +167,7 @@ namespace TimetableCreationTool
                 }
                 else
                 {
-                    MessageBox.Show("failed");
+                    MessageBox.Show("connection failed");
                 }
                     
                 
@@ -128,6 +177,40 @@ namespace TimetableCreationTool
             }
         }
 
-        
+        public void selectIntoDistinct()
+        {
+            string queryString = "INSERT dbo.Room(roomCode,capacity,lab) SELECT roomCode,capacity,lab FROM dbo.roomTemp rt WHERE not exists(SELECT * FROM dbo.Room r WHERE rt.roomCode = r.roomCode);";
+            using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
+            {
+
+                SqlCommand command = new SqlCommand(queryString, dbConnection);
+                dbConnection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                    
+                dbConnection.Close();
+               
+                
+            }
+        }
+        public void truncateTempAfterCSVInsert()
+        {
+            string queryString = "TRUNCATE TABLE dbo.roomTemp;";
+            using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
+            {
+
+                SqlCommand command = new SqlCommand(queryString, dbConnection);
+                dbConnection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                dbConnection.Close();
+
+
+            }
+        }
+
+
+
     }
 }

@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         Title="insertRoomCsv" Height="300" Width="300">
     <Grid>
-        <Button x:Name="insertRoomsCSV" Content="insert rooms csv" HorizontalAlignment="Left" Margin="166,217,0,0" VerticalAlignment="Top" Width="auto"/>
+        <Button x:Name="insertRoomsCSV" Content="insert rooms csv" HorizontalAlignment="Left" Margin="177,239,0,0" VerticalAlignment="Top" Width="auto"/>
         <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="10,24,0,0" VerticalAlignment="Top" Height="147" Width="257"/>
+        <Button x:Name="openExternalCSVFile" Content="Open CSV file to add room data" HorizontalAlignment="Left" Margin="21,201,0,0" VerticalAlignment="Top" Width="197" RenderTransformOrigin="0.093,-0.35" Click="openExternalCSVFile_Click"/>
 
     </Grid>
 </Window>
