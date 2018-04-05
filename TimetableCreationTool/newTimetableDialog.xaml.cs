@@ -19,7 +19,6 @@ namespace TimetableCreationTool
     /// </summary>
     public partial class newTimetableDialog : Window
     {
-        
         public newTimetableDialog()
         {
             InitializeComponent();
@@ -30,8 +29,9 @@ namespace TimetableCreationTool
             string timetableName = timetableNameTextBox.Text;
             Window1 win1 = new Window1(timetableName);
             win1.Show();
+            System.IO.Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Timetable App/" + timetableNameTextBox.Text);
             this.Close();
-            window.Close();
+           
            
 
         }

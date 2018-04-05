@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title= "" Height="300" Width="300">
+        Title= "" Height="300" Width="300"
+        WindowStartupLocation="CenterScreen">
     <Grid>
+        <StackPanel VerticalAlignment="Top">
+            <Menu Width="Auto" Height="20">
+                <MenuItem Header="_File">
+                    <MenuItem x:Name="saveTimetable" Header="Save Timetable" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="loadTimetabe" Header="Load Timetable" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="exitApp" Header="_Exit" HorizontalAlignment="Left" Width="140" Click="menuExit_Click"/>
+                </MenuItem>
+                <MenuItem Header="_View">
+                    <MenuItem x:Name="viewRooms" Header="View List of Rooms" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="viewLecturers" Header="View List of Lecturers" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="viewCourses" Header="View List of Courses" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="viewModules" Header="View List of Modules" HorizontalAlignment="Left"/>
+
+                </MenuItem>
+                <MenuItem Header="_Insert">
+                    <MenuItem x:Name="csvInsert" Header="Insert using csv file" HorizontalAlignment="Left" Width="200">
+                        <MenuItem x:Name="addRoom" Header="Add Rooms" HorizontalAlignment="Left" Click="menuInsertRoomCSV_Click"/>
+                        <MenuItem x:Name="addLecturers" Header="Add Lecturers" HorizontalAlignment="Left"/>
+                        <MenuItem x:Name="addCourses" Header="Add Courses" HorizontalAlignment="Left"/>
+                        <MenuItem x:Name="addModules" Header="Add Modules" HorizontalAlignment="Left"/>
+                    </MenuItem>
+                    <MenuItem x:Name="manualInsert" Header="Insert Normal" HorizontalAlignment="left">
+                        <MenuItem x:Name="addRoomManual" Header="Add Rooms" HorizontalAlignment="Left"/>
+                        <MenuItem x:Name="addLecturersManual" Header="Add Lecturers" HorizontalAlignment="Left"/>
+                        <MenuItem x:Name="addCoursesManual" Header="Add Courses" HorizontalAlignment="Left"/>
+                        <MenuItem x:Name="addModulesManual" Header="Add Modules" HorizontalAlignment="Left"/>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </StackPanel>
         <Label x:Name="label" Content="" HorizontalAlignment="Left" Margin="158,196,0,0" VerticalAlignment="Top"/>
 
     </Grid>

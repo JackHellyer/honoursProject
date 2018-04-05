@@ -17,7 +17,7 @@ namespace TimetableCreationTool
     {
         private timetableCreationEntities dbcontext;
         
-        public string userMyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        
 
         public MainWindow()
         {
@@ -28,7 +28,7 @@ namespace TimetableCreationTool
         {
             newTimetableDialog nt = new newTimetableDialog();
             nt.Show();
-            
+            this.Close();
             
            
         }
@@ -39,60 +39,15 @@ namespace TimetableCreationTool
         }
 
 
-        public void menuExit_Click(object Sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-            
-        }
-
-        public void menuInsertRoomCSV_Click(object Sender, RoutedEventArgs e)
-        {
-            insertRoomCsv irc = new insertRoomCsv();
-
-            bool? result = irc.ShowDialog();
- 
-            System.IO.Directory.CreateDirectory(userMyDocumentsPath + "/Timetable App");
-            createExampleCSVFile();
-             
-        }
+       
 
        
 
 
 
-        public void createExampleCSVFile()
-        {
-            string pathToCreateCSVFile = userMyDocumentsPath + "/Timetable App/rooms.txt";
-           
-            
-                if (File.Exists(pathToCreateCSVFile))
-                {
+       
 
-                }
-                else
-                {
-
-                    try
-                    {
-                        using (FileStream fs = File.Create(pathToCreateCSVFile))
-                        {
-                        Byte[] info = new UTF8Encoding(true).GetBytes("roomCode,capacity,lab");
-                        fs.Write(info, 0, info.Length);
-
-                        }
-                        
-                        
-                    }
-                    catch(Exception ex)
-                    {
-                        Debug.WriteLine(ex.ToString());
-
-                    }
-                    
-                    
-                }
-
-        }
+        
     
        
 

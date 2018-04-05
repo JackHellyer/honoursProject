@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="newTimetableDialog" Height="300" Width="300">
+        Title="" Height="300" Width="300"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Button x:Name="createTimetable" Content="Create Timetable" HorizontalAlignment="Left" Margin="154,218,0,0" VerticalAlignment="Top" Width="102" Click="createTimetable_Click"/>
         <TextBox x:Name="timetableNameTextBox" HorizontalAlignment="Left" Height="26" Margin="136,148,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>

@@ -23,21 +23,24 @@ namespace TimetableCreationTool
     /// </summary>
     public partial class insertRoomCsv : Window
     {
-        public insertRoomCsv()
+        string timetableName;
+        public insertRoomCsv(string tName)
         {
             InitializeComponent();
+            timetableName = tName;
+
         }
         public string userMyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
 
         public void openExternalCSVFile_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(userMyDocumentsPath + "/Timetable App/rooms.txt");
+            System.Diagnostics.Process.Start(userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + "rooms.txt");
         }
 
         public void uploadCsvData_Click(object sender, RoutedEventArgs e)
         {
-            DataTable csvData = getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/rooms.txt");
+            DataTable csvData = getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + "rooms.txt");
             InsertDataTableToSQL(csvData);
             selectIntoDistinct();
             truncateTempAfterCSVInsert();
