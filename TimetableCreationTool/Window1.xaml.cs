@@ -24,6 +24,7 @@ namespace TimetableCreationTool
         
         public string userMyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string timetableName;
+       
         public Window1(string tName)
         {
             InitializeComponent();
@@ -40,7 +41,9 @@ namespace TimetableCreationTool
 
         public void menuInsertRoomCSV_Click(object Sender, RoutedEventArgs e)
         {
+            
             insertRoomCsv irc = new insertRoomCsv(timetableName);
+            irc.Owner = this;
             string fileName = "rooms.txt";
             string tableColumns = "roomCode,capacity,lab";
             createExampleCSVFile(fileName, tableColumns);
@@ -55,13 +58,8 @@ namespace TimetableCreationTool
             string pathToCreateCSVFile = userMyDocumentsPath + "/Timetable App/" + timetableName +"/" + fileName;
 
 
-            if (File.Exists(pathToCreateCSVFile))
+            if (!File.Exists(pathToCreateCSVFile))
             {
-
-            }
-            else
-            {
-
                 try
                 {
                     using (FileStream fs = File.Create(pathToCreateCSVFile))
@@ -78,9 +76,8 @@ namespace TimetableCreationTool
                     Debug.WriteLine(ex.ToString());
 
                 }
-
-
             }
+           
 
         }
     }
