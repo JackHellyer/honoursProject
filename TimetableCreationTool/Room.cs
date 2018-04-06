@@ -23,6 +23,7 @@ namespace TimetableCreationTool
         public int roomId { get; set; }
         public int capacity { get; set; }
         public bool lab { get; set; }
+        public string roomCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Timetable> Timetables { get; set; }

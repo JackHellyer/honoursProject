@@ -21,21 +21,36 @@ namespace TimetableCreationTool
     /// </summary>
     public partial class Window1 : Window
     {
+        //private Model1Container dbContext;
         
         public string userMyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string timetableName;
+        //private System.Windows.Data.CollectionViewSource roomsViewSource;
        
         public Window1(string tName)
         {
             InitializeComponent();
             timetableName = tName;
             this.Title = timetableName;
+           
         }
         
-
-        public void menuExit_Click(object Sender, RoutedEventArgs e)
+        
+        public void menuExit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+
+        }
+
+        public void menuViewRooms_Click(object sender, RoutedEventArgs e)
+        {
+            viewRooms vR = new viewRooms();
+            vR.Owner = this;
+            vR.Show();
+            //Window_Loaded(sender, e);
+
+
+
 
         }
 

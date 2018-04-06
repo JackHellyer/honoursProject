@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title= "" Height="500" Width="750"
         WindowStartupLocation="CenterScreen">
+   
     <Grid>
         <StackPanel VerticalAlignment="Top">
             <Menu Width="Auto" Height="20">
@@ -16,7 +17,7 @@
                     <MenuItem x:Name="exitApp" Header="_Exit" HorizontalAlignment="Left" Width="140" Click="menuExit_Click"/>
                 </MenuItem>
                 <MenuItem Header="_View">
-                    <MenuItem x:Name="viewRooms" Header="View List of Rooms" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="viewRooms" Header="View List of Rooms" HorizontalAlignment="Left" Click="menuViewRooms_Click"/>
                     <MenuItem x:Name="viewLecturers" Header="View List of Lecturers" HorizontalAlignment="Left"/>
                     <MenuItem x:Name="viewCourses" Header="View List of Courses" HorizontalAlignment="Left"/>
                     <MenuItem x:Name="viewModules" Header="View List of Modules" HorizontalAlignment="Left"/>
@@ -38,7 +39,10 @@
                 </MenuItem>
             </Menu>
         </StackPanel>
-        <Label x:Name="label" Content="" HorizontalAlignment="Left" Margin="158,196,0,0" VerticalAlignment="Top"/>
+        
+        
+            
 
-    </Grid>
+
+        </Grid>
 </Window>

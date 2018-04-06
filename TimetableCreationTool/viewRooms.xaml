@@ -1,0 +1,56 @@
+﻿<Window x:Class="TimetableCreationTool.viewRooms"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimetableCreationTool"
+        mc:Ignorable="d"
+        Title="Current Saved Rooms" Height="300" Width="326" Loaded="Window_Loaded"
+        WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <CollectionViewSource x:Key="roomsViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Room}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource roomsViewSource}">
+        <ListView x:Name="roomsListView" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="190" Margin="10,38,0,0" VerticalAlignment="Top" Width="298">
+            <ListView.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn x:Name="roomIdColumn" Header="RoomID" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox  Padding="2" BorderThickness="0" Text="{Binding roomId, Mode=TwoWay}" IsReadOnly="True"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="roomCodeColumn" Header="Room Code" Width="70">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Margin="0,0,0,0" BorderThickness="0" Padding="2" Text="{Binding roomCode, Mode=TwoWay}" IsReadOnly="True"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="roomCapacityColumn" Header="Capacity" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox  Padding="2" BorderThickness="0" Text="{Binding capacity, Mode=TwoWay}" IsReadOnly="True"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="roomIsLabColumn" Header="Is the Room a Lab" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Padding="2" BorderThickness="0" Text="{Binding lab, Mode=TwoWay}"  IsReadOnly="True"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>

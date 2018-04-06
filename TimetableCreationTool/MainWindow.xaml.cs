@@ -15,7 +15,7 @@ namespace TimetableCreationTool
     /// </summary>
     public partial class MainWindow : Window
     {
-        private timetableCreationEntities dbcontext;
+        
         
         
 
