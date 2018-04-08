@@ -25,34 +25,43 @@ namespace TimetableCreationTool
             InitializeComponent();
         }
         public string userMyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
         public void newTimetable_Click(object sender, RoutedEventArgs e)
         {
             newTimetableDialog nt = new newTimetableDialog();
             nt.Show();
-            this.Close();
+            //this.Close();
             
            
         }
-
+        string temp;
         public void loadTimetable_Click(object sender, RoutedEventArgs e)
         {
-
+            insertRoomCsv irc = new insertRoomCsv(temp);
+            
             using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
             {
                 
                 fbd.RootFolder = Environment.SpecialFolder.Desktop;
-                fbd.SelectedPath = userMyDocumentsPath + @"\" + "Timetable App";
+                fbd.SelectedPath = userMyDocumentsPath + @"\" + @"Timetable App";
+                fbd.ShowNewFolderButton = false;
                 System.Windows.Forms.DialogResult result = fbd.ShowDialog();
                 if(result == System.Windows.Forms.DialogResult.OK)
                 {
                     int index = fbd.SelectedPath.LastIndexOf(@"\");
                     string tName = fbd.SelectedPath.Substring(index + 1);
                     //MessageBox.Show(tName);
+                    
                     bool ifValid = ifVaildLoadFile(fbd.SelectedPath);
                     if(ifValid)
                     {
+                        DataTable csvData = irc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "rooms.txt");
+                        irc.InsertDataTableToSQL(csvData);
+                        irc.selectIntoDistinct();
+                        irc.truncateTempAfterCSVInsert();
                         Window1 win1 = new Window1(tName);
                         win1.Show();
+                        irc.Close();
                         this.Close();
                     }
                     else

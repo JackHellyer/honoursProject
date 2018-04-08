@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -25,8 +27,9 @@ namespace TimetableCreationTool
         
         public string userMyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string timetableName;
+        private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
         //private System.Windows.Data.CollectionViewSource roomsViewSource;
-       
+
         public Window1(string tName)
         {
             InitializeComponent();
@@ -35,9 +38,26 @@ namespace TimetableCreationTool
            
         }
         
-        
+        public void menuSave_Click(object sender, RoutedEventArgs e)
+        {
+            saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt");
+
+        }
+
+       
         public void menuExit_Click(object sender, RoutedEventArgs e)
         {
+            /*MessageBoxResult result = MessageBox.Show("Do you want to save before exiting", "Exit", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No)
+            {
+
+            }
+            else
+            {
+                saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt");
+            }*/
+
+            //truncateAllTables();
             Application.Current.Shutdown();
 
         }
@@ -68,6 +88,53 @@ namespace TimetableCreationTool
 
         }
 
+        public void saveDbToCSVFile(string columns, string fName)
+        {
+            SqlConnection dbConnection = new SqlConnection(dbConnectionString);
+            dbConnection.Open();
+            //string command = "SELECT" + 
+            SqlCommand selectRooms = new SqlCommand("SELECT " + columns + " FROM dbo.Room;", dbConnection);
+            SqlDataReader sdr = selectRooms.ExecuteReader();
+
+            string fileName = userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + fName;
+            StreamWriter sw = new StreamWriter(fileName);
+            object[] output = new object[sdr.FieldCount];
+
+            for (int i = 0; i < sdr.FieldCount; i++)
+                output[i] = sdr.GetName(i);
+
+            sw.WriteLine(string.Join(",", output));
+
+            while (sdr.Read())
+            {
+                sdr.GetValues(output);
+                sw.WriteLine(string.Join(",", output));
+            }
+
+            sw.Close();
+            sdr.Close();
+            dbConnection.Close();
+        }
+
+        public void truncateAllTables()
+        {
+            string queryString = "DELETE FROM dbo.Room DBCC CHECKIDENT ('timetableCreation.dbo.Room', RESEED, 0)";
+            using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
+            {
+
+                SqlCommand command = new SqlCommand(queryString, dbConnection);
+                dbConnection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                dbConnection.Close();
+
+
+            }
+        }
+
+        
+
         public void createExampleCSVFile(string fileName, string tableColumns)
         {
             string pathToCreateCSVFile = userMyDocumentsPath + "/Timetable App/" + timetableName +"/" + fileName;
@@ -94,6 +161,19 @@ namespace TimetableCreationTool
             }
            
 
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to save before exiting", "Exit", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No)
+            {
+                
+            }
+            else
+            {
+                saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt");
+            }
         }
     }
 }

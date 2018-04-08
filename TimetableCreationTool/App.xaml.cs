@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +14,31 @@ namespace TimetableCreationTool
     /// </summary>
     public partial class App : Application
     {
+        private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
         
+        public void onExit(object sender, ExitEventArgs e)
+        {
+            
+            ///saveBeforeExit s = new saveBeforeExit();
+            //s.Show();
+            truncateAllTables();
+        }
+
+        public void truncateAllTables()
+        {
+            string queryString = "DELETE FROM dbo.Room DBCC CHECKIDENT ('timetableCreation.dbo.Room', RESEED, 0)";
+            using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
+            {
+
+                SqlCommand command = new SqlCommand(queryString, dbConnection);
+                dbConnection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                dbConnection.Close();
+
+
+            }
+        }
     }
 }

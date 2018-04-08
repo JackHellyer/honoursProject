@@ -39,6 +39,7 @@ namespace TimetableCreationTool
             else
             {
                 MessageBox.Show("Timetable Name already Exists, chose another");
+                this.Close();
 
             }
             
