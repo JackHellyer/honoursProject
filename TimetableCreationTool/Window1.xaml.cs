@@ -43,6 +43,7 @@ namespace TimetableCreationTool
         {
             saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt", "dbo.Room");
             saveDbToCSVFile("lecturerName,lecturerDept,modulesTaught", "lecturers.txt", "dbo.Lecturer");
+            saveDbToCSVFile("courseCode,courseName,noOfStudents,moduleId", "courses.txt", "dbo.Course");
 
         }
 
@@ -73,6 +74,12 @@ namespace TimetableCreationTool
             vl.Show();
         }
 
+        public void menuViewCourses_Click(object sender, RoutedEventArgs e)
+        {
+            viewCourses vc = new viewCourses();
+            vc.Owner = this;
+            vc.Show();
+        }
         public void menuInsertRoomCSV_Click(object Sender, RoutedEventArgs e)
         {
             
@@ -97,6 +104,16 @@ namespace TimetableCreationTool
             ilc.Show();
         }
 
+        public void menuCoursesCSV_Click(object sender, RoutedEventArgs e)
+        {
+            insertCourseCSV icc = new insertCourseCSV(timetableName);
+            icc.Owner = this;
+            string fileName = "courses.txt";
+            string tableColumns = "courseCode,courseName,noOfStudents,moduleId";
+            createExampleCSVFile(fileName, tableColumns);
+            icc.Show();
+
+        }
         public void saveDbToCSVFile(string columns, string fName, string tableName)
         {
             SqlConnection dbConnection = new SqlConnection(dbConnectionString);
@@ -128,7 +145,7 @@ namespace TimetableCreationTool
 
         public void truncateAllTables()
         {
-            string queryString = "DELETE FROM dbo.Room DBCC CHECKIDENT ('timetableCreation.dbo.Room', RESEED, 0)";
+            string queryString = "DELETE FROM dbo.Room DBCC CHECKIDENT ('timetableCreation.dbo.Room', RESEED, 0);  DELETE FROM dbo.Lecturer DBCC CHECKIDENT ('timetableCreation.dbo.Lecturer', RESEED, 0); DELETE FROM dbo.Course DBCC CHECKIDENT ('timetableCreation.dbo.Course', RESEED, 0);";
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
 
@@ -184,6 +201,7 @@ namespace TimetableCreationTool
             {
                 saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt", "dbo.Room");
                 saveDbToCSVFile("lecturerName,lecturerDept,modulesTaught", "lecturers.txt", "dbo.Lecturer");
+                saveDbToCSVFile("courseCode,courseName,noOfStudents,moduleId", "courses.txt", "dbo.Course");
             }
         }
 

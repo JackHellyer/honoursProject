@@ -53,6 +53,7 @@ namespace TimetableCreationTool
                     //MessageBox.Show(tName);
                     insertRoomCsv irc = new insertRoomCsv(tName);
                     insertLecturerCSV ilc = new insertLecturerCSV(tName);
+                    insertCourseCSV icc = new insertCourseCSV(tName);
                     bool ifValid = ifVaildLoadFile(fbd.SelectedPath);
                     if(ifValid)
                     {
@@ -62,11 +63,15 @@ namespace TimetableCreationTool
                         irc.truncateTempAfterCSVInsert();
                         DataTable lecturerCSV = irc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "lecturers.txt");
                         ilc.InsertDataTableToSQL(lecturerCSV);
+                        DataTable courseCSV = icc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "courses.txt");
+                        icc.InsertDataTableToSQL(courseCSV);
+
                         
                         Window1 win1 = new Window1(tName);
                         win1.Show();
                         irc.Close();
                         ilc.Close();
+                        icc.Close();
                         this.Close();
                     }
                     else

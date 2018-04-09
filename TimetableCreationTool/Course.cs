@@ -24,6 +24,7 @@ namespace TimetableCreationTool
         public string courseName { get; set; }
         public int noOfStudents { get; set; }
         public string moduleId { get; set; }
+        public string courseCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Timetable> Timetables { get; set; }

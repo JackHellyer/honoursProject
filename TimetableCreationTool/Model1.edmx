@@ -9,7 +9,8 @@
           <Key>
             <PropertyRef Name="courseId" />
           </Key>
-          <Property Name="courseId" Type="int" Nullable="false" />
+          <Property Name="courseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="courseCode" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="courseName" Type="varchar" MaxLength="75" Nullable="false" />
           <Property Name="noOfStudents" Type="int" Nullable="false" />
           <Property Name="moduleId" Type="varchar" MaxLength="15" />
@@ -18,7 +19,7 @@
           <Key>
             <PropertyRef Name="lecturerId" />
           </Key>
-          <Property Name="lecturerId" Type="int" Nullable="false" />
+          <Property Name="lecturerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="lecturerName" Type="varchar" MaxLength="75" Nullable="false" />
           <Property Name="lecturerDept" Type="varchar" MaxLength="75" Nullable="false" />
           <Property Name="modulesTaught" Type="varchar" MaxLength="15" />
@@ -136,6 +137,7 @@
           <Property Name="moduleId" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Timetables" Relationship="Self.FK_Course" FromRole="Course" ToRole="Timetable" />
           <NavigationProperty Name="Module" Relationship="Self.FK_CourseModules" FromRole="Course" ToRole="Module" />
+          <Property Name="courseCode" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Lecturer">
           <Key>
@@ -260,6 +262,7 @@
           <EntitySetMapping Name="Courses">
             <EntityTypeMapping TypeName="timetableCreationModel.Course">
               <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="courseCode" ColumnName="courseCode" />
                 <ScalarProperty Name="courseId" ColumnName="courseId" />
                 <ScalarProperty Name="courseName" ColumnName="courseName" />
                 <ScalarProperty Name="noOfStudents" ColumnName="noOfStudents" />
