@@ -1,17 +1,17 @@
-﻿<Window x:Class="TimetableCreationTool.viewRooms"
+﻿<Window x:Class="TimetableCreationTool.viewLecturers"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="Current Rooms" Height="300" Width="326" Loaded="Window_Loaded"
+        Title="Current Lecturers" Height="300" Width="300" Loaded="Window_Loaded"
         WindowStartupLocation="CenterOwner">
     <Window.Resources>
-        <CollectionViewSource x:Key="roomsViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Room}, CreateList=True}"/>
+        <CollectionViewSource x:Key="lecturersViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Lecturer}, CreateList=True}"/>
     </Window.Resources>
-    <Grid DataContext="{StaticResource roomsViewSource}">
-        <ListView x:Name="roomsListView" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="190" Margin="10,38,0,0" VerticalAlignment="Top" Width="238">
+    <Grid DataContext="{StaticResource lecturersViewSource}">
+        <ListView x:Name="LecturerListView" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="190" Margin="16,32,18,0" VerticalAlignment="Top" Width="258">
             <ListView.ItemContainerStyle>
                 <Style>
                     <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
@@ -20,24 +20,24 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn x:Name="roomCodeColumn" Header="Room Code" Width="70">
+                    <GridViewColumn x:Name="lecturerNameColumn" Header="Lecturer Name" Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="0,0,0,0" BorderThickness="0" Padding="2" Text="{Binding roomCode, Mode=TwoWay}" IsReadOnly="True"/>
+                                <TextBox Margin="0,0,0,0" BorderThickness="0" Padding="2" Text="{Binding lecturerName, Mode=TwoWay}" IsReadOnly="True"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="roomCapacityColumn" Header="Capacity" Width="50">
+                    <GridViewColumn x:Name="lecturerDeptColumn" Header="Capacity" Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox  Padding="2" BorderThickness="0" Text="{Binding capacity, Mode=TwoWay}" IsReadOnly="True"/>
+                                <TextBox  Padding="2" BorderThickness="0" Text="{Binding lecturerDept, Mode=TwoWay}" IsReadOnly="True"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="roomIsLabColumn" Header="Is the Room a Lab" Width="100">
+                    <GridViewColumn x:Name="modulesTaught" Header="Modules Taught" Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Padding="2" BorderThickness="0" Text="{Binding lab, Mode=TwoWay}"  IsReadOnly="True"/>
+                                <TextBox Padding="2" BorderThickness="0" Text="{Binding modulesTaught, Mode=TwoWay}"  IsReadOnly="True"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

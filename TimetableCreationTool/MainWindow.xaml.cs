@@ -37,7 +37,7 @@ namespace TimetableCreationTool
         string temp;
         public void loadTimetable_Click(object sender, RoutedEventArgs e)
         {
-            insertRoomCsv irc = new insertRoomCsv(temp);
+            
             
             using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
             {
@@ -51,17 +51,22 @@ namespace TimetableCreationTool
                     int index = fbd.SelectedPath.LastIndexOf(@"\");
                     string tName = fbd.SelectedPath.Substring(index + 1);
                     //MessageBox.Show(tName);
-                    
+                    insertRoomCsv irc = new insertRoomCsv(tName);
+                    insertLecturerCSV ilc = new insertLecturerCSV(tName);
                     bool ifValid = ifVaildLoadFile(fbd.SelectedPath);
                     if(ifValid)
                     {
-                        DataTable csvData = irc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "rooms.txt");
-                        irc.InsertDataTableToSQL(csvData);
+                        DataTable roomCSV = irc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "rooms.txt");
+                        irc.InsertDataTableToSQL(roomCSV);
                         irc.selectIntoDistinct();
                         irc.truncateTempAfterCSVInsert();
+                        DataTable lecturerCSV = irc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "lecturers.txt");
+                        ilc.InsertDataTableToSQL(lecturerCSV);
+                        
                         Window1 win1 = new Window1(tName);
                         win1.Show();
                         irc.Close();
+                        ilc.Close();
                         this.Close();
                     }
                     else

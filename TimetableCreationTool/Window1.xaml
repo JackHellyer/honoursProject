@@ -19,23 +19,27 @@
                 </MenuItem>
                 <MenuItem Header="_View">
                     <MenuItem x:Name="viewRooms" Header="View List of Rooms" HorizontalAlignment="Left" Click="menuViewRooms_Click"/>
-                    <MenuItem x:Name="viewLecturers" Header="View List of Lecturers" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="viewLecturers" Header="View List of Lecturers" HorizontalAlignment="Left" Click="menuViewLecturers_Click"/>
                     <MenuItem x:Name="viewCourses" Header="View List of Courses" HorizontalAlignment="Left"/>
                     <MenuItem x:Name="viewModules" Header="View List of Modules" HorizontalAlignment="Left"/>
 
                 </MenuItem>
                 <MenuItem Header="_Insert">
-                    <MenuItem x:Name="csvInsert" Header="Insert using csv file" HorizontalAlignment="Left" Width="200">
-                        <MenuItem x:Name="addRoom" Header="Add Rooms" HorizontalAlignment="Left" Click="menuInsertRoomCSV_Click"/>
-                        <MenuItem x:Name="addLecturers" Header="Add Lecturers" HorizontalAlignment="Left"/>
-                        <MenuItem x:Name="addCourses" Header="Add Courses" HorizontalAlignment="Left"/>
-                        <MenuItem x:Name="addModules" Header="Add Modules" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="insertRooms" Header="Add Rooms" HorizontalAlignment="Left">
+                        <MenuItem x:Name="roomsCSV" Header="Add using CSV file" HorizontalAlignment="Left" Click="menuInsertRoomCSV_Click"/>
+                        <MenuItem x:Name="roomsManual" Header="Add using form" HorizontalAlignment="Left"/>
                     </MenuItem>
-                    <MenuItem x:Name="manualInsert" Header="Insert Normal" HorizontalAlignment="left">
-                        <MenuItem x:Name="addRoomManual" Header="Add Rooms" HorizontalAlignment="Left"/>
-                        <MenuItem x:Name="addLecturersManual" Header="Add Lecturers" HorizontalAlignment="Left"/>
-                        <MenuItem x:Name="addCoursesManual" Header="Add Courses" HorizontalAlignment="Left"/>
-                        <MenuItem x:Name="addModulesManual" Header="Add Modules" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="insertLecturer" Header="Add Lecturers" HorizontalAlignment="Left">
+                        <MenuItem x:Name="lecturersCSV" Header="Add using CSV file" HorizontalAlignment="Left" Click="menuLecturersCSV_Click"/>
+                        <MenuItem x:Name="lecturersManual" Header="Add using form" HorizontalAlignment="Left"/>
+                    </MenuItem>
+                    <MenuItem x:Name="insertCourses" Header="Add Courses" HorizontalAlignment="Left">
+                        <MenuItem x:Name="coursesCSV" Header="Add using CSV file" HorizontalAlignment="Left"/>
+                        <MenuItem x:Name="coursesManual" Header="Add using form" HorizontalAlignment="Left"/>
+                    </MenuItem>
+                    <MenuItem x:Name="insertModules" Header="Add Modules" HorizontalAlignment="Left">
+                        <MenuItem x:Name="modulesCSV" Header="Add using CSV file" HorizontalAlignment="Left"/>
+                        <MenuItem x:Name="modulesManual" Header="Add using form" HorizontalAlignment="Left"/>
                     </MenuItem>
                 </MenuItem>
             </Menu>

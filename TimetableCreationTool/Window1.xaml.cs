@@ -25,7 +25,7 @@ namespace TimetableCreationTool
     {
         //private Model1Container dbContext;
         
-        public string userMyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        string userMyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string timetableName;
         private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
         //private System.Windows.Data.CollectionViewSource roomsViewSource;
@@ -38,40 +38,39 @@ namespace TimetableCreationTool
            
         }
         
+        
         public void menuSave_Click(object sender, RoutedEventArgs e)
         {
-            saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt");
+            saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt", "dbo.Room");
+            saveDbToCSVFile("lecturerName,lecturerDept,modulesTaught", "lecturers.txt", "dbo.Lecturer");
 
         }
 
        
         public void menuExit_Click(object sender, RoutedEventArgs e)
         {
-            /*MessageBoxResult result = MessageBox.Show("Do you want to save before exiting", "Exit", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.No)
-            {
-
-            }
-            else
-            {
-                saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt");
-            }*/
-
-            //truncateAllTables();
+            
             Application.Current.Shutdown();
 
         }
 
         public void menuViewRooms_Click(object sender, RoutedEventArgs e)
         {
-            viewRooms vR = new viewRooms();
-            vR.Owner = this;
-            vR.Show();
+            viewRooms vr = new viewRooms();
+            vr.Owner = this;
+            vr.Show();
             //Window_Loaded(sender, e);
 
 
 
 
+        }
+
+        public void menuViewLecturers_Click(object sender, RoutedEventArgs e)
+        {
+            viewLecturers vl = new viewLecturers();
+            vl.Owner = this;
+            vl.Show();
         }
 
         public void menuInsertRoomCSV_Click(object Sender, RoutedEventArgs e)
@@ -88,12 +87,23 @@ namespace TimetableCreationTool
 
         }
 
-        public void saveDbToCSVFile(string columns, string fName)
+        private void menuLecturersCSV_Click(object sender, RoutedEventArgs e)
+        {
+            insertLecturerCSV ilc = new insertLecturerCSV(timetableName);
+            ilc.Owner = this;
+            string fileName = "lecturers.txt";
+            string tableColumns = "lecturerName,lecturerDept,modulesTaught";
+            createExampleCSVFile(fileName, tableColumns);
+            ilc.Show();
+        }
+
+        public void saveDbToCSVFile(string columns, string fName, string tableName)
         {
             SqlConnection dbConnection = new SqlConnection(dbConnectionString);
             dbConnection.Open();
+            
             //string command = "SELECT" + 
-            SqlCommand selectRooms = new SqlCommand("SELECT " + columns + " FROM dbo.Room;", dbConnection);
+            SqlCommand selectRooms = new SqlCommand("SELECT " + columns + " FROM " + tableName + ";", dbConnection);
             SqlDataReader sdr = selectRooms.ExecuteReader();
 
             string fileName = userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + fName;
@@ -172,8 +182,11 @@ namespace TimetableCreationTool
             }
             else
             {
-                saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt");
+                saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt", "dbo.Room");
+                saveDbToCSVFile("lecturerName,lecturerDept,modulesTaught", "lecturers.txt", "dbo.Lecturer");
             }
         }
+
+        
     }
 }
