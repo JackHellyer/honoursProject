@@ -43,7 +43,7 @@ namespace TimetableCreationTool
         {
             saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt", "dbo.Room");
             saveDbToCSVFile("lecturerName,lecturerDept,modulesTaught", "lecturers.txt", "dbo.Lecturer");
-            saveDbToCSVFile("courseCode,courseName,noOfStudents,moduleId", "courses.txt", "dbo.Course");
+            saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
 
         }
 
@@ -109,7 +109,7 @@ namespace TimetableCreationTool
             insertCourseCSV icc = new insertCourseCSV(timetableName);
             icc.Owner = this;
             string fileName = "courses.txt";
-            string tableColumns = "courseCode,courseName,noOfStudents,moduleId";
+            string tableColumns = "courseCode,courseName,noOfStudents";
             createExampleCSVFile(fileName, tableColumns);
             icc.Show();
 
@@ -201,7 +201,7 @@ namespace TimetableCreationTool
             {
                 saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt", "dbo.Room");
                 saveDbToCSVFile("lecturerName,lecturerDept,modulesTaught", "lecturers.txt", "dbo.Lecturer");
-                saveDbToCSVFile("courseCode,courseName,noOfStudents,moduleId", "courses.txt", "dbo.Course");
+                saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
             }
         }
 

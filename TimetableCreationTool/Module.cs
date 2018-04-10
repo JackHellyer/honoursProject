@@ -20,7 +20,8 @@ namespace TimetableCreationTool
             this.Courses = new HashSet<Course>();
         }
     
-        public string moduleId { get; set; }
+        public int moduleId { get; set; }
+        public string moduleCode { get; set; }
         public string moduleName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

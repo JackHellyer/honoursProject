@@ -35,7 +35,7 @@ namespace TimetableCreationTool
            
         }
         
-        string temp;
+        
         public void loadTimetable_Click(object sender, RoutedEventArgs e)
         {
             
@@ -66,6 +66,8 @@ namespace TimetableCreationTool
                         ilc.InsertDataTableToSQL(lecturerCSV);
                         DataTable courseCSV = icc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "courses.txt");
                         icc.InsertDataTableToSQL(courseCSV);
+                        icc.selectIntoDistinct();
+                        icc.truncateTempAfterCSVInsert();
 
                         
                         Window1 win1 = new Window1(tName);

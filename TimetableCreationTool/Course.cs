@@ -18,16 +18,17 @@ namespace TimetableCreationTool
         public Course()
         {
             this.Timetables = new HashSet<Timetable>();
+            this.Modules = new HashSet<Module>();
         }
     
         public int courseId { get; set; }
+        public string courseCode { get; set; }
         public string courseName { get; set; }
         public int noOfStudents { get; set; }
-        public string moduleId { get; set; }
-        public string courseCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Timetable> Timetables { get; set; }
-        public virtual Module Module { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Module> Modules { get; set; }
     }
 }

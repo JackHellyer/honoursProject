@@ -131,7 +131,7 @@ namespace TimetableCreationTool
             }
         }
 
-        /*public void selectIntoDistinct()
+        public void selectIntoDistinct()
         {
             string queryString = "INSERT dbo.Lecturer(lecturerName,lecturerDept,moduleTaught) SELECT lecturerName,lecturerDept,moduleTaught FROM dbo.lecturerTemp;";
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
@@ -162,7 +162,7 @@ namespace TimetableCreationTool
 
 
             }
-        }*/
+        }
 
 
     }

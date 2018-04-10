@@ -41,8 +41,8 @@ namespace TimetableCreationTool
         {
             DataTable csvData = getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + "courses.txt");
             InsertDataTableToSQL(csvData);
-            //selectIntoDistinct();
-            //truncateTempAfterCSVInsert();
+            selectIntoDistinct();
+            truncateTempAfterCSVInsert();
             this.Close();
         }
 
@@ -106,7 +106,7 @@ namespace TimetableCreationTool
                     using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
                     {
                         // change this method later to have a string parameter which will hold the destination table
-                        sbc.DestinationTableName = "dbo.Course";
+                        sbc.DestinationTableName = "dbo.courseTemp";
 
                         foreach (var column in csvFileData.Columns)
 
@@ -130,9 +130,9 @@ namespace TimetableCreationTool
             }
         }
 
-        /*public void selectIntoDistinct()
+        public void selectIntoDistinct()
         {
-            string queryString = "INSERT dbo.Lecturer(lecturerName,lecturerDept,moduleTaught) SELECT lecturerName,lecturerDept,moduleTaught FROM dbo.lecturerTemp;";
+            string queryString = "INSERT dbo.Course(courseCode,courseName,noOfStudents) SELECT courseCode,courseName,noOfStudents FROM dbo.courseTemp ct WHERE not exists(SELECT * FROM dbo.Course c WHERE ct.courseCode = c.courseCode);";
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
 
@@ -148,7 +148,7 @@ namespace TimetableCreationTool
         }
         public void truncateTempAfterCSVInsert()
         {
-            string queryString = "TRUNCATE TABLE dbo.lecturerTemp;";
+            string queryString = "TRUNCATE TABLE dbo.courseTemp;";
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
 
@@ -161,6 +161,6 @@ namespace TimetableCreationTool
 
 
             }
-        }*/
+        }
     }
 }
