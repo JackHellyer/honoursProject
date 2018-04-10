@@ -34,6 +34,7 @@ namespace TimetableCreationTool
             
            
         }
+        
         string temp;
         public void loadTimetable_Click(object sender, RoutedEventArgs e)
         {
