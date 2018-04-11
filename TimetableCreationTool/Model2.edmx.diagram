@@ -14,6 +14,7 @@
         <AssociationConnector Association="timetableCreationModel1.FK_Lecturer" ManuallyRouted="false" />
         <AssociationConnector Association="timetableCreationModel1.FK_Room" ManuallyRouted="false" />
         <AssociationConnector Association="timetableCreationModel1.Course_Module" ManuallyRouted="false" />
+        <AssociationConnector Association="timetableCreationModel1.Lecturer_Module" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

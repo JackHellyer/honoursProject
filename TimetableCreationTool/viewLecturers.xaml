@@ -27,20 +27,14 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="lecturerDeptColumn" Header="Capacity" Width="auto">
+                    <GridViewColumn x:Name="lecturerDeptColumn" Header="Lecturer Department" Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox  Padding="2" BorderThickness="0" Text="{Binding lecturerDept, Mode=TwoWay}" IsReadOnly="True"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="modulesTaught" Header="Modules Taught" Width="auto">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Padding="2" BorderThickness="0" Text="{Binding modulesTaught, Mode=TwoWay}"  IsReadOnly="True"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    
                 </GridView>
             </ListView.View>
         </ListView>

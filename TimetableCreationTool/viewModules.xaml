@@ -5,8 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="viewModules" Height="300" Width="300">
-    <Grid>
-        
+        Title="Current Modules" Height="300" Width="300"
+        WindowStartupLocation="CenterOwner"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="moduleViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Module}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource moduleViewSource}">
+        <ListView x:Name="moduleListView" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="190" Margin="16,32,18,0" VerticalAlignment="Top" Width="258">
+            <ListView.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn x:Name="moduleCodeColumn" Header="Module Code" Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Margin="0,0,0,0" BorderThickness="0" Padding="2" Text="{Binding moduleCode, Mode=TwoWay}" IsReadOnly="True"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="moduleNameColumn" Header="Module Name" Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox  Padding="2" BorderThickness="0" Text="{Binding moduleName, Mode=TwoWay}" IsReadOnly="True"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
 </Window>

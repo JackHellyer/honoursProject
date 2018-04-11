@@ -42,8 +42,9 @@ namespace TimetableCreationTool
         public void menuSave_Click(object sender, RoutedEventArgs e)
         {
             saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt", "dbo.Room");
-            saveDbToCSVFile("lecturerName,lecturerDept,modulesTaught", "lecturers.txt", "dbo.Lecturer");
+            saveDbToCSVFile("lecturerId,lecturerName,lecturerDept", "lecturers.txt", "dbo.Lecturer");
             saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
+            saveDbToCSVFile("moduleCode,moduleName", "modules.txt", "dbo.Module");
 
         }
 
@@ -80,6 +81,14 @@ namespace TimetableCreationTool
             vc.Owner = this;
             vc.Show();
         }
+
+        public void menuViewModules_Click(object sender, RoutedEventArgs e)
+        {
+            viewModules vm = new viewModules();
+            vm.Owner = this;
+            vm.Show();
+        }
+
         public void menuInsertRoomCSV_Click(object Sender, RoutedEventArgs e)
         {
             
@@ -99,7 +108,7 @@ namespace TimetableCreationTool
             insertLecturerCSV ilc = new insertLecturerCSV(timetableName);
             ilc.Owner = this;
             string fileName = "lecturers.txt";
-            string tableColumns = "lecturerName,lecturerDept,modulesTaught";
+            string tableColumns = "lecturerId,lecturerName,lecturerDept";
             createExampleCSVFile(fileName, tableColumns);
             ilc.Show();
         }
@@ -114,6 +123,17 @@ namespace TimetableCreationTool
             icc.Show();
 
         }
+
+        public void menuModulesCSV_Click(object sender, RoutedEventArgs e)
+        {
+            insertModuleCSV imc = new insertModuleCSV(timetableName);
+            imc.Owner = this;
+            string fileName = "modules.txt";
+            string tableColumns = "moduleCode,moduleName";
+            createExampleCSVFile(fileName, tableColumns);
+            imc.Show();
+        }
+
         public void saveDbToCSVFile(string columns, string fName, string tableName)
         {
             SqlConnection dbConnection = new SqlConnection(dbConnectionString);
@@ -145,7 +165,7 @@ namespace TimetableCreationTool
 
         public void truncateAllTables()
         {
-            string queryString = "DELETE FROM dbo.Room DBCC CHECKIDENT ('timetableCreation.dbo.Room', RESEED, 0);  DELETE FROM dbo.Lecturer DBCC CHECKIDENT ('timetableCreation.dbo.Lecturer', RESEED, 0); DELETE FROM dbo.Course DBCC CHECKIDENT ('timetableCreation.dbo.Course', RESEED, 0);";
+            string queryString = "DELETE FROM dbo.Room DBCC CHECKIDENT ('timetableCreation.dbo.Room', RESEED, 0);  DELETE FROM dbo.Lecturer DBCC CHECKIDENT ('timetableCreation.dbo.Lecturer', RESEED, 0); DELETE FROM dbo.Course DBCC CHECKIDENT ('timetableCreation.dbo.Course', RESEED, 0); DELETE FROM dbo.Module DBCC CHECKIDENT ('timetableCreation.dbo.Module', RESEED, 0);";
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
 
@@ -200,8 +220,9 @@ namespace TimetableCreationTool
             else
             {
                 saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt", "dbo.Room");
-                saveDbToCSVFile("lecturerName,lecturerDept,modulesTaught", "lecturers.txt", "dbo.Lecturer");
+                saveDbToCSVFile("lecturerId,lecturerName,lecturerDept", "lecturers.txt", "dbo.Lecturer");
                 saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
+                saveDbToCSVFile("moduleCode,moduleName", "modules.txt", "dbo.Module");
             }
         }
 

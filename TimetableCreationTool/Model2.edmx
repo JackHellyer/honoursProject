@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="timetableCreationModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="timetableCreationModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="courseId" />
@@ -29,7 +29,14 @@
           <Property Name="lecturerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="lecturerName" Type="varchar" MaxLength="75" Nullable="false" />
           <Property Name="lecturerDept" Type="varchar" MaxLength="75" Nullable="false" />
-          <Property Name="modulesTaught" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Lecturer_Module">
+          <Key>
+            <PropertyRef Name="lecturerId" />
+            <PropertyRef Name="moduleId" />
+          </Key>
+          <Property Name="lecturerId" Type="int" Nullable="false" />
+          <Property Name="moduleId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Module">
           <Key>
@@ -96,6 +103,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Lecturer_Module">
+          <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="1" />
+          <End Role="Lecturer_Module" Type="Self.Lecturer_Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturer">
+              <PropertyRef Name="lecturerId" />
+            </Principal>
+            <Dependent Role="Lecturer_Module">
+              <PropertyRef Name="lecturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lecturer_Module2">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Lecturer_Module" Type="Self.Lecturer_Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="moduleId" />
+            </Principal>
+            <Dependent Role="Lecturer_Module">
+              <PropertyRef Name="moduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Module">
           <End Role="Module" Type="Self.Module" Multiplicity="1" />
           <End Role="Course_Module" Type="Self.Course_Module" Multiplicity="*" />
@@ -124,6 +155,7 @@
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Course_Module" EntityType="Self.Course_Module" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lecturer" EntityType="Self.Lecturer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lecturer_Module" EntityType="Self.Lecturer_Module" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Timetable" EntityType="Self.Timetable" Schema="dbo" store:Type="Tables" />
@@ -139,6 +171,14 @@
             <End Role="Lecturer" EntitySet="Lecturer" />
             <End Role="Timetable" EntitySet="Timetable" />
           </AssociationSet>
+          <AssociationSet Name="FK_Lecturer_Module" Association="Self.FK_Lecturer_Module">
+            <End Role="Lecturer" EntitySet="Lecturer" />
+            <End Role="Lecturer_Module" EntitySet="Lecturer_Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lecturer_Module2" Association="Self.FK_Lecturer_Module2">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Lecturer_Module" EntitySet="Lecturer_Module" />
+          </AssociationSet>
           <AssociationSet Name="FK_Module" Association="Self.FK_Module">
             <End Role="Module" EntitySet="Module" />
             <End Role="Course_Module" EntitySet="Course_Module" />
@@ -148,8 +188,7 @@
             <End Role="Timetable" EntitySet="Timetable" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="timetableCreationModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -171,8 +210,8 @@
           <Property Name="lecturerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="lecturerName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="lecturerDept" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="modulesTaught" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Timetables" Relationship="Self.FK_Lecturer" FromRole="Lecturer" ToRole="Timetable" />
+          <NavigationProperty Name="Modules" Relationship="timetableCreationModel1.Lecturer_Module" FromRole="Lecturer" ToRole="Module" />
         </EntityType>
         <EntityType Name="Module">
           <Key>
@@ -182,6 +221,7 @@
           <Property Name="moduleCode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="moduleName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Courses" Relationship="Self.Course_Module" FromRole="Module" ToRole="Course" />
+          <NavigationProperty Name="Lecturers" Relationship="timetableCreationModel1.Lecturer_Module" FromRole="Module" ToRole="Lecturer" />
         </EntityType>
         <EntityType Name="Room">
           <Key>
@@ -270,7 +310,15 @@
             <End Role="Course" EntitySet="Courses" />
             <End Role="Module" EntitySet="Modules" />
           </AssociationSet>
+          <AssociationSet Name="Lecturer_Module" Association="timetableCreationModel1.Lecturer_Module">
+            <End Role="Lecturer" EntitySet="Lecturers" />
+            <End Role="Module" EntitySet="Modules" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="Lecturer_Module">
+          <End Type="timetableCreationModel1.Lecturer" Role="Lecturer" Multiplicity="*" />
+          <End Type="timetableCreationModel1.Module" Role="Module" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -293,7 +341,6 @@
                 <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
                 <ScalarProperty Name="lecturerName" ColumnName="lecturerName" />
                 <ScalarProperty Name="lecturerDept" ColumnName="lecturerDept" />
-                <ScalarProperty Name="modulesTaught" ColumnName="modulesTaught" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -335,6 +382,14 @@
             </EndProperty>
             <EndProperty Name="Module">
               <ScalarProperty Name="moduleId" ColumnName="moduleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Lecturer_Module" TypeName="timetableCreationModel1.Lecturer_Module" StoreEntitySet="Lecturer_Module">
+            <EndProperty Name="Module">
+              <ScalarProperty Name="moduleId" ColumnName="moduleId" />
+            </EndProperty>
+            <EndProperty Name="Lecturer">
+              <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

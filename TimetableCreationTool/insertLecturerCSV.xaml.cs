@@ -42,8 +42,8 @@ namespace TimetableCreationTool
         {
             DataTable csvData = getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + "lecturers.txt");
             InsertDataTableToSQL(csvData);
-            //selectIntoDistinct();
-            //truncateTempAfterCSVInsert();
+            selectIntoDistinct();
+            truncateTempAfterCSVInsert();
             this.Close();
         }
 
@@ -107,7 +107,7 @@ namespace TimetableCreationTool
                     using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
                     {
                         // change this method later to have a string parameter which will hold the destination table
-                        sbc.DestinationTableName = "dbo.Lecturer";
+                        sbc.DestinationTableName = "dbo.lecturerTemp";
 
                         foreach (var column in csvFileData.Columns)
 
@@ -133,7 +133,7 @@ namespace TimetableCreationTool
 
         public void selectIntoDistinct()
         {
-            string queryString = "INSERT dbo.Lecturer(lecturerName,lecturerDept,moduleTaught) SELECT lecturerName,lecturerDept,moduleTaught FROM dbo.lecturerTemp;";
+            string queryString = "SET IDENTITY_INSERT dbo.Lecturer ON; INSERT dbo.Lecturer(lecturerId,lecturerName,lecturerDept) SELECT lecturerId,lecturerName,lecturerDept FROM dbo.lecturerTemp lt WHERE not exists(SELECT * FROM dbo.Lecturer l WHERE lt.lecturerId = l.lecturerId);";
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
 

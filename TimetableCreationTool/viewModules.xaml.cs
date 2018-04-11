@@ -23,5 +23,21 @@ namespace TimetableCreationTool
         {
             InitializeComponent();
         }
+
+        private timetableCreationEntities dbcontext;
+        private System.Windows.Data.CollectionViewSource moduleViewSource;
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.dbcontext = new timetableCreationEntities();
+            this.moduleViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("moduleViewSource")));
+
+            var query = from Module in this.dbcontext.Modules
+                        orderby Module.moduleCode
+                        select Module;
+            this.moduleViewSource.Source = query.ToList();
+        }
+
+        
     }
 }

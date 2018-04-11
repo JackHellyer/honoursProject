@@ -1,8 +1,8 @@
-﻿using System;
-using System.IO;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,43 +13,42 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Data.SqlClient;
-using Microsoft.VisualBasic.FileIO;
+using System.Windows.Shapes;
 
 namespace TimetableCreationTool
 {
     /// <summary>
-    /// Interaction logic for insertRoomCsv.xaml
+    /// Interaction logic for insertModuleCSV.xaml
     /// </summary>
-    public partial class insertRoomCsv : Window
+    public partial class insertModuleCSV : Window
     {
         string timetableName;
-        public insertRoomCsv(string tName)
+        public insertModuleCSV(string tName)
         {
             InitializeComponent();
             timetableName = tName;
-
         }
+
         public string userMyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
 
         public void openExternalCSVFile_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + "rooms.txt");
+            System.Diagnostics.Process.Start(userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + "modules.txt");
         }
 
         public void uploadCsvData_Click(object sender, RoutedEventArgs e)
         {
-            DataTable csvData = getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + "rooms.txt");
+            DataTable csvData = getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + "modules.txt");
             InsertDataTableToSQL(csvData);
             selectIntoDistinct();
             truncateTempAfterCSVInsert();
-            //this.Close();
+            this.Close();
         }
 
         public DataTable getDataTableCSVFile(string filePath)
         {
-            
+
             DataTable csvData = new DataTable();
             try
             {
@@ -107,7 +106,7 @@ namespace TimetableCreationTool
                     using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
                     {
                         // change this method later to have a string parameter which will hold the destination table
-                        sbc.DestinationTableName = "dbo.roomTemp";
+                        sbc.DestinationTableName = "dbo.moduleTemp";
 
                         foreach (var column in csvFileData.Columns)
 
@@ -133,7 +132,7 @@ namespace TimetableCreationTool
 
         public void selectIntoDistinct()
         {
-            string queryString = "INSERT dbo.Room(roomCode,capacity,lab) SELECT roomCode,capacity,lab FROM dbo.roomTemp rt WHERE not exists(SELECT * FROM dbo.Room r WHERE rt.roomCode = r.roomCode);";
+            string queryString = "INSERT dbo.Module(moduleCode,moduleName) SELECT moduleCode,moduleName FROM dbo.moduleTemp mt WHERE not exists(SELECT * FROM dbo.Module m WHERE mt.moduleCode = m.moduleCode);";
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
 
@@ -149,7 +148,7 @@ namespace TimetableCreationTool
         }
         public void truncateTempAfterCSVInsert()
         {
-            string queryString = "TRUNCATE TABLE dbo.roomTemp;";
+            string queryString = "TRUNCATE TABLE dbo.moduleTemp;";
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
 
@@ -163,7 +162,5 @@ namespace TimetableCreationTool
 
             }
         }
-
-
     }
 }

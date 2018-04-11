@@ -18,6 +18,7 @@ namespace TimetableCreationTool
         public Module()
         {
             this.Courses = new HashSet<Course>();
+            this.Lecturers = new HashSet<Lecturer>();
         }
     
         public int moduleId { get; set; }
@@ -26,5 +27,7 @@ namespace TimetableCreationTool
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Course> Courses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lecturer> Lecturers { get; set; }
     }
 }

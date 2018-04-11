@@ -55,6 +55,7 @@ namespace TimetableCreationTool
                     insertRoomCsv irc = new insertRoomCsv(tName);
                     insertLecturerCSV ilc = new insertLecturerCSV(tName);
                     insertCourseCSV icc = new insertCourseCSV(tName);
+                    insertModuleCSV imc = new insertModuleCSV(tName);
                     bool ifValid = ifVaildLoadFile(fbd.SelectedPath);
                     if(ifValid)
                     {
@@ -64,17 +65,25 @@ namespace TimetableCreationTool
                         irc.truncateTempAfterCSVInsert();
                         DataTable lecturerCSV = irc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "lecturers.txt");
                         ilc.InsertDataTableToSQL(lecturerCSV);
+                        ilc.selectIntoDistinct();
+                        ilc.truncateTempAfterCSVInsert();
                         DataTable courseCSV = icc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "courses.txt");
                         icc.InsertDataTableToSQL(courseCSV);
                         icc.selectIntoDistinct();
                         icc.truncateTempAfterCSVInsert();
+                        DataTable modulesCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "modules.txt");
+                        imc.InsertDataTableToSQL(modulesCSV);
+                        imc.selectIntoDistinct();
+                        imc.truncateTempAfterCSVInsert();
 
-                        
+
+
                         Window1 win1 = new Window1(tName);
                         win1.Show();
                         irc.Close();
                         ilc.Close();
                         icc.Close();
+                        imc.Close();
                         this.Close();
                     }
                     else
