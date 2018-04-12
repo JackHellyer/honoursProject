@@ -117,7 +117,7 @@ namespace TimetableCreationTool
 
             int mId = module.moduleId;
 
-            string query = "DELETE FROM Course_Module WHERE courseId = " + cId + "AND moduleId = " + mId + ");";
+            string query = "DELETE FROM Course_Module WHERE courseId = " + cId + "AND moduleId = " + mId + ";";
 
             SqlConnection conn = new SqlConnection(dbConnectionString);
             conn.Open();
