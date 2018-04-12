@@ -63,9 +63,9 @@
           <Property Name="courseId" Type="int" Nullable="false" />
           <Property Name="lecturerId" Type="int" Nullable="false" />
           <Property Name="roomId" Type="int" Nullable="false" />
-          <Property Name="startTime" Type="time" Precision="7" Nullable="false" />
-          <Property Name="day" Type="varchar" MaxLength="9" Nullable="false" />
-          <Property Name="duration" Type="int" Nullable="false" />
+          <Property Name="timeslot" Type="int" Nullable="false" />
+          <Property Name="day" Type="int" Nullable="false" />
+          <Property Name="duration" Type="int" />
         </EntityType>
         <Association Name="FK_Course">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
@@ -241,12 +241,13 @@
           <Property Name="courseId" Type="Int32" Nullable="false" />
           <Property Name="lecturerId" Type="Int32" Nullable="false" />
           <Property Name="roomId" Type="Int32" Nullable="false" />
-          <Property Name="startTime" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="day" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="duration" Type="Int32" Nullable="false" />
+          <Property Name="day" Type="Int32" Nullable="false" />
+          <Property Name="duration" Type="Int32" />
+	  <Property Name="timeslot" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Course" Relationship="Self.FK_Course" FromRole="Timetable" ToRole="Course" />
           <NavigationProperty Name="Lecturer" Relationship="Self.FK_Lecturer" FromRole="Timetable" ToRole="Lecturer" />
           <NavigationProperty Name="Room" Relationship="Self.FK_Room" FromRole="Timetable" ToRole="Room" />
+          
         </EntityType>
         <Association Name="FK_Course">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
@@ -370,9 +371,9 @@
                 <ScalarProperty Name="courseId" ColumnName="courseId" />
                 <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
                 <ScalarProperty Name="roomId" ColumnName="roomId" />
-                <ScalarProperty Name="startTime" ColumnName="startTime" />
                 <ScalarProperty Name="day" ColumnName="day" />
                 <ScalarProperty Name="duration" ColumnName="duration" />
+		<ScalarProperty Name="timeslot" ColumnName="timeslot"/>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

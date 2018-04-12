@@ -11,7 +11,7 @@
         <CollectionViewSource x:Key="moduleViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Module}, CreateList=True}"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource moduleViewSource}">
-        <ListView x:Name="moduleListView" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="190" Margin="16,32,18,0" VerticalAlignment="Top" Width="258">
+        <ListView x:Name="moduleListView" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="175" Margin="16,32,18,0" VerticalAlignment="Top" Width="258">
             <ListView.ItemContainerStyle>
                 <Style>
                     <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
@@ -41,7 +41,9 @@
             </ListView.View>
         </ListView>
         <ComboBox x:Name="comboBox" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="16,243,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="comboBox_DropDownClosed"/>
-        <Button x:Name="addModules" Content="Add Modules" HorizontalAlignment="Left" Margin="141,243,0,0" VerticalAlignment="Top" Width="133" Click="addModules_Click"/>
+        <Button x:Name="addModules" Content="Add Modules" HorizontalAlignment="Left" Margin="141,245,0,0" VerticalAlignment="Top" Width="133" Click="addModules_Click"/>
+        <Label x:Name="label" Content="Modules currently studied" HorizontalAlignment="Left" Margin="16,6,0,0" VerticalAlignment="Top" Width="171"/>
+        <Button x:Name="deleteButton" Content="Delete Selected Module" HorizontalAlignment="Left" Margin="41,212,0,0" VerticalAlignment="Top" Width="206" Click="deleteButton_Click"/>
 
     </Grid>
 </Window>

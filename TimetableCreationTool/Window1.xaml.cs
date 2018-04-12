@@ -200,6 +200,11 @@ namespace TimetableCreationTool
             dt.Columns.Add("10:00");
             dt.Columns.Add("11:00");
             dt.Columns.Add("12:00");
+            dt.Columns.Add("13:00");
+            dt.Columns.Add("14:00");
+            dt.Columns.Add("15:00");
+            dt.Columns.Add("16:00");
+            dt.Columns.Add("17:00");
 
             DataRow dr = dt.NewRow();
             dr["DayName"] = "Monday";
@@ -232,7 +237,7 @@ namespace TimetableCreationTool
 
         public void bindComboBox(ComboBox comboBoxName)
         {
-            string query = "select courseId, courseCode from dbo.Course ORDER BY courseCode";
+            string query = "select courseId, courseName from dbo.Course ORDER BY courseCode";
             SqlConnection conn = new SqlConnection(dbConnectionString);
             conn.Open();
             SqlDataAdapter sda = new SqlDataAdapter(query, conn);
@@ -240,7 +245,7 @@ namespace TimetableCreationTool
             DataSet ds = new DataSet();
             sda.Fill(ds, "dbo.Course");
             comboBoxName.ItemsSource = ds.Tables[0].DefaultView;
-            comboBoxName.DisplayMemberPath = ds.Tables[0].Columns["courseCode"].ToString();
+            comboBoxName.DisplayMemberPath = ds.Tables[0].Columns["courseName"].ToString();
             comboBoxName.SelectedValuePath = ds.Tables[0].Columns["courseId"].ToString();
         }
 
@@ -293,13 +298,17 @@ namespace TimetableCreationTool
 
         private void chooseCourse_DropDownClosed(object sender, EventArgs e)
         {
-            MessageBox.Show(chooseCourse.SelectedValue.ToString());
-            string fileName = "coursemodules.txt";
-            string tableColumns = "courseId,moduleId";
-            createExampleCSVFile(fileName, tableColumns);
+            if(chooseCourse.SelectedItem != null)
+            {
+                MessageBox.Show(chooseCourse.SelectedValue.ToString());
+                string fileName = "coursemodules.txt";
+                string tableColumns = "courseId,moduleId";
+                createExampleCSVFile(fileName, tableColumns);
+
+                addModulesStudied ams = new addModulesStudied(chooseCourse.Text, chooseCourse.SelectedValue.ToString());
+                ams.ShowDialog();
+            }
             
-            addModulesStudied ams = new addModulesStudied(chooseCourse.Text, chooseCourse.SelectedValue.ToString());
-            ams.ShowDialog();
 
 
         }

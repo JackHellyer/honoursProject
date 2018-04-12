@@ -107,7 +107,7 @@ namespace TimetableCreationTool
                     using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
                     {
                         // change this method later to have a string parameter which will hold the destination table
-                        sbc.DestinationTableName = "dbo.lecturerTemp";
+                        sbc.DestinationTableName = "lecturerTemp";
 
                         foreach (var column in csvFileData.Columns)
 

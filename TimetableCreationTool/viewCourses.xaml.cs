@@ -36,6 +36,10 @@ namespace TimetableCreationTool
                         orderby Course.courseCode
                         select Course;
             this.coursesViewSource.Source = query.ToList();
+
+            
+
+            
         }
     }
 }

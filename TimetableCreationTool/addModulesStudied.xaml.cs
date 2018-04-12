@@ -37,16 +37,24 @@ namespace TimetableCreationTool
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+
+            onRefresh();
+            
+        }
+
+        public void onRefresh()
+        {
             this.dbcontext = new timetableCreationEntities();
             this.moduleViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("moduleViewSource")));
+            int intCId = int.Parse(cId);
+
+            var query2 = dbcontext.Modules.Where(m => m.Courses.Any(c => c.courseId == intCId));
 
             var query = from Module in this.dbcontext.Modules
-                        orderby Module.moduleCode
+                        where Module.Courses.Any(c => c.courseId == intCId)
+                        orderby Module.moduleName
                         select Module;
-            var query2 = dbcontext.Modules.Where(s => s.Courses.Any(c => c.courseCode == cName));
-            this.moduleViewSource.Source = query2.ToList();
-
-            
+            this.moduleViewSource.Source = query.ToList();
         }
 
         public void bindComboBox(ComboBox comboBoxName)
@@ -65,20 +73,62 @@ namespace TimetableCreationTool
 
         private void comboBox_DropDownClosed(object sender, EventArgs e)
         {
-            MessageBox.Show(comboBox.SelectedValue.ToString() + " " + comboBox.Text);
+            //MessageBox.Show(comboBox.SelectedValue.ToString() + " " + comboBox.Text);
         }
 
         private void addModules_Click(object sender, RoutedEventArgs e)
         {
-            int courseId = int.Parse(cId);
-            int moduleId = int.Parse(comboBox.SelectedValue.ToString());
-            string query = "INSERT INTO Course_Module (courseId, moduleId) VALUES (" + courseId + ","  + moduleId + ");";
+            if(comboBox.SelectedItem != null)
+            {
+                int courseId = int.Parse(cId);
+                int moduleId = int.Parse(comboBox.SelectedValue.ToString());
+                string query = "INSERT INTO Course_Module (courseId, moduleId) VALUES(" + courseId + "," + moduleId +");";
+                string query2 = "INSERT dbo.Course_Module (courseId, moduleId) SELECT " + courseId + "," +  moduleId + " WHERE NOT EXISTS( SELECT courseId, moduleId FROM dbo.Course_Module WHERE courseId = " + courseId + " AND moduleId = " + moduleId + ");";
+
+               
+
+
+                SqlConnection conn = new SqlConnection(dbConnectionString);
+                conn.Open();
+                SqlCommand command = new SqlCommand(query2, conn);
+                command.ExecuteNonQuery();
+                conn.Close();
+
+                onRefresh();
+            }
+            else
+            {
+                MessageBox.Show("No module selected.");
+            }
+            
+        }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            object selected = this.moduleListView.SelectedItem;
+            //if there isn't an order selected, show message and return
+            if (selected == null)
+            {
+                MessageBox.Show("No module selected");
+                return;
+            }
+            Module module = (Module)selected;
+
+
+            int mId = module.moduleId;
+
+            string query = "DELETE FROM Course_Module WHERE courseId = " + cId + "AND moduleId = " + mId + ");";
 
             SqlConnection conn = new SqlConnection(dbConnectionString);
             conn.Open();
             SqlCommand command = new SqlCommand(query, conn);
             command.ExecuteNonQuery();
             conn.Close();
+
+            onRefresh();
+            //MessageBox.Show(mId.ToString());
+
+            onRefresh();
         }
     }
 }
