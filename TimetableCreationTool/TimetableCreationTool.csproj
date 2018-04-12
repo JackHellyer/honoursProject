@@ -95,6 +95,9 @@
     <Compile Include="insertRoomCsv.xaml.cs">
       <DependentUpon>insertRoomCsv.xaml</DependentUpon>
     </Compile>
+    <Compile Include="insertTimetable.xaml.cs">
+      <DependentUpon>insertTimetable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lecturer.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
@@ -157,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="insertRoomCsv.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="insertTimetable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

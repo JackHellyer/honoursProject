@@ -47,6 +47,7 @@ namespace TimetableCreationTool
             string test2 = dataGrid.SelectedIndex.ToString();
 
             MessageBox.Show(test + ",     " + test2);
+
         }
         
         public void menuSave_Click(object sender, RoutedEventArgs e)
@@ -311,6 +312,43 @@ namespace TimetableCreationTool
             
 
 
+        }
+
+        private void dataGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show(dataGrid.SelectedIndex.ToString());
+        }
+
+        private void dataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+
+            
+            if(dataGrid.Items.IndexOf(dataGrid.CurrentItem)  < 5)
+            {
+                if(chooseCourse.SelectedItem != null)
+                {
+                    int columnIndex = dataGrid.CurrentCell.Column.DisplayIndex;
+
+                    int rowIndex = dataGrid.Items.IndexOf(dataGrid.CurrentItem);
+                    DataRowView v = (DataRowView)dataGrid.Items[rowIndex];
+                    string day = (string)v[0];
+                    string timeString = (string)dataGrid.Columns[columnIndex].Header;
+
+                    string cName = chooseCourse.Text;
+                    //MessageBox.Show((string)v.ToString());
+                    //MessageBox.Show(day + " and    " + timeString);
+                    string cId = chooseCourse.SelectedValue.ToString();
+                    insertTimetable it = new insertTimetable(day, timeString, cId, cName);
+                    it.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Must choose course");
+                }
+                
+            }
+
+            
         }
     }
 }
