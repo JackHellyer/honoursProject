@@ -25,6 +25,7 @@ namespace TimetableCreationTool
             InitializeComponent();
         }
         public string userMyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
 
         public void newTimetable_Click(object sender, RoutedEventArgs e)
         {
@@ -76,6 +77,8 @@ namespace TimetableCreationTool
                         imc.selectIntoDistinct();
                         imc.truncateTempAfterCSVInsert();
 
+                        DataTable courseModuleCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "coursemodules.txt");
+                        InsertDataTableToSQL(courseModuleCSV);
 
 
                         Window1 win1 = new Window1(tName);
@@ -133,6 +136,44 @@ namespace TimetableCreationTool
 
              }
              return ifValid;
+        }
+
+        public void InsertDataTableToSQL(DataTable csvFileData)
+        {
+            using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
+            {
+
+
+                dbConnection.Open();
+                if (dbConnection.State == ConnectionState.Open)
+                {
+
+                    //MessageBox.Show("connection success");
+                    using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
+                    {
+                        // change this method later to have a string parameter which will hold the destination table
+                        sbc.DestinationTableName = "dbo.Course_Module";
+
+                        foreach (var column in csvFileData.Columns)
+
+                            sbc.ColumnMappings.Add(column.ToString(), column.ToString());
+                        sbc.WriteToServer(csvFileData);
+                        dbConnection.Close();
+
+
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("connection failed");
+                }
+
+
+
+
+
+            }
         }
 
     }

@@ -44,7 +44,8 @@ namespace TimetableCreationTool
             InsertDataTableToSQL(csvData);
             selectIntoDistinct();
             truncateTempAfterCSVInsert();
-            //this.Close();
+            
+            this.Close();
         }
 
         public DataTable getDataTableCSVFile(string filePath)

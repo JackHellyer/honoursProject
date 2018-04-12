@@ -77,6 +77,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="addModulesStudied.xaml.cs">
+      <DependentUpon>addModulesStudied.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Course.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
@@ -137,6 +140,10 @@
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
+    <Page Include="addModulesStudied.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="insertCourseCSV.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

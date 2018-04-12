@@ -1,12 +1,11 @@
-﻿<Window x:Class="TimetableCreationTool.viewModules"
+﻿<Window x:Class="TimetableCreationTool.addModulesStudied"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="Current Modules" Height="300" Width="300"
-        WindowStartupLocation="CenterOwner"
+        Title="addModulesStudied" Height="346.392" Width="300"
         Loaded="Window_Loaded">
     <Window.Resources>
         <CollectionViewSource x:Key="moduleViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Module}, CreateList=True}"/>
@@ -17,7 +16,7 @@
                 <Style>
                     <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
-                    
+
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>
@@ -29,7 +28,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    
+
                     <GridViewColumn x:Name="moduleNameColumn" Header="Module Name" Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -41,6 +40,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <ComboBox x:Name="comboBox" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="16,243,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="comboBox_DropDownClosed"/>
+        <Button x:Name="addModules" Content="Add Modules" HorizontalAlignment="Left" Margin="141,243,0,0" VerticalAlignment="Top" Width="133" Click="addModules_Click"/>
 
     </Grid>
 </Window>
+

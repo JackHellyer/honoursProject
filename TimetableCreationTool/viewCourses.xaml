@@ -20,34 +20,29 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
+                    
                     <GridViewColumn x:Name="courseIdcolumn" Header="Course Code" Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="0,0,0,0" BorderThickness="0" Padding="2" Text="{Binding courseCode, Mode=TwoWay}" IsReadOnly="True"/>
+                                <Label BorderThickness="0" Padding="2" Content="{Binding courseCode, Mode=TwoWay}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn x:Name="courseNameColumn" Header="Name" Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox  Padding="2" BorderThickness="0" Text="{Binding courseName, Mode=TwoWay}" IsReadOnly="True"/>
+                                <Label  Padding="2" BorderThickness="0" Content="{Binding courseName, Mode=TwoWay}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn x:Name="noOfStudents" Header="Number of Students" Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Padding="2" BorderThickness="0" Text="{Binding noOfStudents, Mode=TwoWay}"  IsReadOnly="True"/>
+                                <Label Padding="2" BorderThickness="0" Content="{Binding noOfStudents, Mode=TwoWay}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="modulesStudied" Header="Modules Studied" Width="auto">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Padding="2" BorderThickness="0" Text="{Binding moduleId, Mode=TwoWay}"  IsReadOnly="True"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                   
                 </GridView>
             </ListView.View>
         </ListView>

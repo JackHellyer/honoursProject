@@ -23,21 +23,21 @@
                     <GridViewColumn x:Name="roomCodeColumn" Header="Room Code" Width="70">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="0,0,0,0" BorderThickness="0" Padding="2" Text="{Binding roomCode, Mode=TwoWay}" IsReadOnly="True"/>
+                                <Label BorderThickness="0" Padding="2" Content="{Binding roomCode, Mode=TwoWay}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn x:Name="roomCapacityColumn" Header="Capacity" Width="50">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox  Padding="2" BorderThickness="0" Text="{Binding capacity, Mode=TwoWay}" IsReadOnly="True"/>
+                                <Label  Padding="2" BorderThickness="0" Content="{Binding capacity, Mode=TwoWay}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn x:Name="roomIsLabColumn" Header="Is the Room a Lab" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Padding="2" BorderThickness="0" Text="{Binding lab, Mode=TwoWay}"  IsReadOnly="True"/>
+                                <Label Padding="2" BorderThickness="0" Content="{Binding lab, Mode=TwoWay}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

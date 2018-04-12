@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
@@ -35,9 +37,17 @@ namespace TimetableCreationTool
             InitializeComponent();
             timetableName = tName;
             this.Title = timetableName;
+            bindComboBox(chooseCourse);
            
         }
         
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int test = dataGrid.CurrentCell.Column.DisplayIndex;
+            string test2 = dataGrid.SelectedIndex.ToString();
+
+            MessageBox.Show(test + ",     " + test2);
+        }
         
         public void menuSave_Click(object sender, RoutedEventArgs e)
         {
@@ -45,6 +55,7 @@ namespace TimetableCreationTool
             saveDbToCSVFile("lecturerId,lecturerName,lecturerDept", "lecturers.txt", "dbo.Lecturer");
             saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
             saveDbToCSVFile("moduleCode,moduleName", "modules.txt", "dbo.Module");
+            saveDbToCSVFile("courseId,moduleId", "coursemodules.txt", "dbo.Course_Module");
 
         }
 
@@ -60,7 +71,7 @@ namespace TimetableCreationTool
         {
             viewRooms vr = new viewRooms();
             vr.Owner = this;
-            vr.Show();
+            vr.ShowDialog();
             //Window_Loaded(sender, e);
 
 
@@ -72,21 +83,21 @@ namespace TimetableCreationTool
         {
             viewLecturers vl = new viewLecturers();
             vl.Owner = this;
-            vl.Show();
+            vl.ShowDialog();
         }
 
         public void menuViewCourses_Click(object sender, RoutedEventArgs e)
         {
             viewCourses vc = new viewCourses();
             vc.Owner = this;
-            vc.Show();
+            vc.ShowDialog();
         }
 
         public void menuViewModules_Click(object sender, RoutedEventArgs e)
         {
             viewModules vm = new viewModules();
             vm.Owner = this;
-            vm.Show();
+            vm.ShowDialog();
         }
 
         public void menuInsertRoomCSV_Click(object Sender, RoutedEventArgs e)
@@ -97,7 +108,7 @@ namespace TimetableCreationTool
             string fileName = "rooms.txt";
             string tableColumns = "roomCode,capacity,lab";
             createExampleCSVFile(fileName, tableColumns);
-            bool? result = irc.ShowDialog();
+            irc.ShowDialog();
 
             
 
@@ -110,7 +121,7 @@ namespace TimetableCreationTool
             string fileName = "lecturers.txt";
             string tableColumns = "lecturerId,lecturerName,lecturerDept";
             createExampleCSVFile(fileName, tableColumns);
-            ilc.Show();
+            ilc.ShowDialog();
         }
 
         public void menuCoursesCSV_Click(object sender, RoutedEventArgs e)
@@ -120,7 +131,7 @@ namespace TimetableCreationTool
             string fileName = "courses.txt";
             string tableColumns = "courseCode,courseName,noOfStudents";
             createExampleCSVFile(fileName, tableColumns);
-            icc.Show();
+            icc.ShowDialog();
 
         }
 
@@ -131,7 +142,7 @@ namespace TimetableCreationTool
             string fileName = "modules.txt";
             string tableColumns = "moduleCode,moduleName";
             createExampleCSVFile(fileName, tableColumns);
-            imc.Show();
+            imc.ShowDialog();
         }
 
         public void saveDbToCSVFile(string columns, string fName, string tableName)
@@ -165,7 +176,7 @@ namespace TimetableCreationTool
 
         public void truncateAllTables()
         {
-            string queryString = "DELETE FROM dbo.Room DBCC CHECKIDENT ('timetableCreation.dbo.Room', RESEED, 0);  DELETE FROM dbo.Lecturer DBCC CHECKIDENT ('timetableCreation.dbo.Lecturer', RESEED, 0); DELETE FROM dbo.Course DBCC CHECKIDENT ('timetableCreation.dbo.Course', RESEED, 0); DELETE FROM dbo.Module DBCC CHECKIDENT ('timetableCreation.dbo.Module', RESEED, 0);";
+            string queryString = "TRUNCATE TABLE dbo.Course_Module; DELETE FROM dbo.Room DBCC CHECKIDENT ('timetableCreation.dbo.Room', RESEED, 0);  DELETE FROM dbo.Lecturer DBCC CHECKIDENT ('timetableCreation.dbo.Lecturer', RESEED, 0); DELETE FROM dbo.Course DBCC CHECKIDENT ('timetableCreation.dbo.Course', RESEED, 0); DELETE FROM dbo.Module DBCC CHECKIDENT ('timetableCreation.dbo.Module', RESEED, 0);";
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
 
@@ -180,7 +191,60 @@ namespace TimetableCreationTool
             }
         }
 
-        
+        public void createDatatable(object sender,RoutedEventArgs e)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("DayName");
+            dt.Columns.Add("08:00");
+            dt.Columns.Add("09:00");
+            dt.Columns.Add("10:00");
+            dt.Columns.Add("11:00");
+            dt.Columns.Add("12:00");
+
+            DataRow dr = dt.NewRow();
+            dr["DayName"] = "Monday";
+            dt.Rows.Add(dr);
+
+            DataRow dr2 = dt.NewRow();
+            dr2["DayName"] = "Tuesday";
+            dt.Rows.Add(dr2);
+
+            DataRow dr3 = dt.NewRow();
+            dr3["DayName"] = "Wednesday";
+            dt.Rows.Add(dr3);
+
+            
+            DataRow dr4 = dt.NewRow();
+            dr4["DayName"] = "Thursday";
+            dt.Rows.Add(dr4);
+
+            DataRow dr5 = dt.NewRow();
+            dr5["DayName"] = "Friday";
+            dt.Rows.Add(dr5);
+
+            dataGrid.ItemsSource = dt.DefaultView;
+
+            
+            
+
+
+        }
+
+        public void bindComboBox(ComboBox comboBoxName)
+        {
+            string query = "select courseId, courseCode from dbo.Course ORDER BY courseCode";
+            SqlConnection conn = new SqlConnection(dbConnectionString);
+            conn.Open();
+            SqlDataAdapter sda = new SqlDataAdapter(query, conn);
+
+            DataSet ds = new DataSet();
+            sda.Fill(ds, "dbo.Course");
+            comboBoxName.ItemsSource = ds.Tables[0].DefaultView;
+            comboBoxName.DisplayMemberPath = ds.Tables[0].Columns["courseCode"].ToString();
+            comboBoxName.SelectedValuePath = ds.Tables[0].Columns["courseId"].ToString();
+        }
+
+       
 
         public void createExampleCSVFile(string fileName, string tableColumns)
         {
@@ -223,9 +287,21 @@ namespace TimetableCreationTool
                 saveDbToCSVFile("lecturerId,lecturerName,lecturerDept", "lecturers.txt", "dbo.Lecturer");
                 saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
                 saveDbToCSVFile("moduleCode,moduleName", "modules.txt", "dbo.Module");
+                saveDbToCSVFile("courseId,moduleId", "coursemodules.txt", "dbo.Course_Module");
             }
         }
 
-        
+        private void chooseCourse_DropDownClosed(object sender, EventArgs e)
+        {
+            MessageBox.Show(chooseCourse.SelectedValue.ToString());
+            string fileName = "coursemodules.txt";
+            string tableColumns = "courseId,moduleId";
+            createExampleCSVFile(fileName, tableColumns);
+            
+            addModulesStudied ams = new addModulesStudied(chooseCourse.Text, chooseCourse.SelectedValue.ToString());
+            ams.ShowDialog();
+
+
+        }
     }
 }
