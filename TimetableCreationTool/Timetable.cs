@@ -16,11 +16,12 @@ namespace TimetableCreationTool
     {
         public int id { get; set; }
         public int courseId { get; set; }
-        public int lecturerId { get; set; }
+        public int moduleId { get; set; }
+        public Nullable<int> lecturerId { get; set; }
         public int roomId { get; set; }
+        public string time { get; set; }
         public string day { get; set; }
         public Nullable<int> duration { get; set; }
-        public string time { get; set; }
     
         public virtual Course Course { get; set; }
         public virtual Lecturer Lecturer { get; set; }

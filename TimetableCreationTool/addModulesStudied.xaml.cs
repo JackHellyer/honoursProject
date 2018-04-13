@@ -32,7 +32,7 @@ namespace TimetableCreationTool
             bindComboBox(comboBox);
 
         }
-        private timetableCreationEntities dbcontext;
+        private timetableCreationEntities2 dbcontext;
         private System.Windows.Data.CollectionViewSource moduleViewSource;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -44,7 +44,7 @@ namespace TimetableCreationTool
 
         public void onRefresh()
         {
-            this.dbcontext = new timetableCreationEntities();
+            this.dbcontext = new timetableCreationEntities2();
             this.moduleViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("moduleViewSource")));
             int intCId = int.Parse(cId);
 

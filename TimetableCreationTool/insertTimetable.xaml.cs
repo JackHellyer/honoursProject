@@ -70,8 +70,8 @@ namespace TimetableCreationTool
                 comboBoxName.ItemsSource = ds.Tables[0].DefaultView;
                 comboBoxName.DisplayMemberPath = ds.Tables[0].Columns["roomCode"].ToString();
                 comboBoxName.SelectedValuePath = ds.Tables[0].Columns["roomId"].ToString();
-         
 
+            conn.Close();
 
 
             // string query = "select r.roomId, r.roomCode from dbo.Room r, dbo.Course c, dbo.Timetable t WHERE c.courseId = " + cId + " AND c.noOfStudents <= r.capacity AND t.day <> " + dayTextBox.Text  + " ORDER BY roomCode;";
@@ -80,6 +80,38 @@ namespace TimetableCreationTool
             
         }
 
+        private void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(moduleCombobox.SelectedItem != null && roomCombobox.SelectedItem != null)
+            {
+                int courseId = int.Parse(cId);
+                int moduleId = int.Parse(moduleCombobox.SelectedValue.ToString());
+                int roomId = int.Parse(roomCombobox.SelectedValue.ToString());
+                
+                string query = "INSERT INTO Course_Module (courseId, moduleId) VALUES(" + courseId + "," + moduleId + ");";
+                string query2 = "INSERT dbo.Course_Module (courseId, moduleId) SELECT " + courseId + "," + moduleId + " WHERE NOT EXISTS( SELECT courseId, moduleId FROM dbo.Course_Module WHERE courseId = " + courseId + " AND moduleId = " + moduleId + ");";
 
+
+
+
+                SqlConnection conn = new SqlConnection(dbConnectionString);
+                conn.Open();
+                SqlCommand command = new SqlCommand("INSERT INTO dbo.Timetable (courseId, moduleId, roomId, day, time) VALUES(@courseId, @moduleId, @roomId, @day, @time);", conn);
+                command.Parameters.AddWithValue("@courseId", courseId);
+                command.Parameters.AddWithValue("@moduleId", moduleId);
+                command.Parameters.AddWithValue("@roomId", roomId);
+                command.Parameters.AddWithValue("@day", dayTextBox.Text);
+                command.Parameters.AddWithValue("@time", timeTextBox.Text);
+
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+            
+        }
+
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

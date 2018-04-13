@@ -13,10 +13,10 @@ namespace TimetableCreationTool
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class timetableCreationEntities : DbContext
+    public partial class timetableCreationEntities2 : DbContext
     {
-        public timetableCreationEntities()
-            : base("name=timetableCreationEntities")
+        public timetableCreationEntities2()
+            : base("name=timetableCreationEntities2")
         {
         }
     
@@ -30,5 +30,9 @@ namespace TimetableCreationTool
         public virtual DbSet<Module> Modules { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<Timetable> Timetables { get; set; }
+        public virtual DbSet<courseTemp> courseTemps { get; set; }
+        public virtual DbSet<lecturerTemp> lecturerTemps { get; set; }
+        public virtual DbSet<moduleTemp> moduleTemps { get; set; }
+        public virtual DbSet<roomTemp> roomTemps { get; set; }
     }
 }

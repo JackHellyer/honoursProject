@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="insertTimetable" Height="300" Width="300">
     <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="172,216,0,0" VerticalAlignment="Top" Width="74"/>
-        <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" Margin="44,216,0,0" VerticalAlignment="Top" Width="76"/>
+        <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="172,216,0,0" VerticalAlignment="Top" Width="74" Click="saveButton_Click"/>
+        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="44,216,0,0" VerticalAlignment="Top" Width="76" Click="cancelButton_Click"/>
         <Label x:Name="labelCourseName" Content="Course Name" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top"/>
         <Label x:Name="labelModuleName" Content="Module Name" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top"/>
         <Label x:Name="labelRoom" Content="Room" HorizontalAlignment="Left" Margin="28,105,0,0" VerticalAlignment="Top"/>
