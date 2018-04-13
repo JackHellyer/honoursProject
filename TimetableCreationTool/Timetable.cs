@@ -18,9 +18,9 @@ namespace TimetableCreationTool
         public int courseId { get; set; }
         public int lecturerId { get; set; }
         public int roomId { get; set; }
-        public int day { get; set; }
+        public string day { get; set; }
         public Nullable<int> duration { get; set; }
-        public int timeslot { get; set; }
+        public string time { get; set; }
     
         public virtual Course Course { get; set; }
         public virtual Lecturer Lecturer { get; set; }

@@ -59,7 +59,7 @@ namespace TimetableCreationTool
 
         public void bindComboBox(ComboBox comboBoxName)
         {
-            string query = "select moduleId, moduleCode, moduleName from dbo.Module ORDER BY moduleCode";
+            string query = "select moduleId, moduleCode, moduleName from dbo.Module ORDER BY moduleName";
             SqlConnection conn = new SqlConnection(dbConnectionString);
             conn.Open();
             SqlDataAdapter sda = new SqlDataAdapter(query, conn);
