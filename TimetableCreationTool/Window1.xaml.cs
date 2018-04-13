@@ -288,6 +288,7 @@ namespace TimetableCreationTool
                 saveDbToCSVFile("moduleCode,moduleName", "modules.txt", "dbo.Module");
                 saveDbToCSVFile("courseId,moduleId", "coursemodules.txt", "dbo.Course_Module");
                 saveDbToCSVFile("courseId, moduleId, roomId, day, time", "timetable.txt", "dbo.Timetable");
+                saveDbToCSVFile("lecturerId, moduleId", "lecturermodules.txt", "dbo.Lecturer_Module");
             }
         }
 
@@ -347,7 +348,10 @@ namespace TimetableCreationTool
 
         private void assignLecturerButton_Click(object sender, RoutedEventArgs e)
         {
+            assignLecturer_Module alm = new assignLecturer_Module();
 
+            alm.ShowDialog();
+            createExampleCSVFile("lecturermodules.txt", "lecturerId, moduleId");
         }
     }
 }

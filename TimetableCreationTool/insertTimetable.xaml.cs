@@ -34,6 +34,7 @@ namespace TimetableCreationTool
             courseNameTextBox.Text = courseName;
             bindComboBox(moduleCombobox);
             bindComboBox1(roomCombobox);
+            //bindComboBox2(lecturercomboBox);
 
         }
 
@@ -80,6 +81,41 @@ namespace TimetableCreationTool
             
         }
 
+        
+        public void bindComboBox2(ComboBox comboBoxName)
+        {
+            if(moduleCombobox.SelectedItem != null)
+            {
+                int moduleId = int.Parse(moduleCombobox.SelectedValue.ToString());
+                //MessageBox.Show(moduleId.ToString());
+                SqlConnection conn = new SqlConnection(dbConnectionString);
+                conn.Open();
+                SqlDataAdapter sda = new SqlDataAdapter("select lm.lecturerId, lm.moduleId, l.lecturerName from dbo.Lecturer l, dbo.Lecturer_Module lm WHERE lm.lecturerId = l.lecturerId AND lm.moduleId = @moduleId ORDER BY l.lecturerName;", conn);
+                sda.SelectCommand.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@moduleId",
+                    Value = moduleId
+
+                });
+                //sda.SelectCommand.Parameters.AddWithValue("@day", dayTextBox.Text);
+                DataSet ds = new DataSet();
+                sda.Fill(ds, "dbo.Lecturer");
+                comboBoxName.ItemsSource = ds.Tables[0].DefaultView;
+                comboBoxName.DisplayMemberPath = ds.Tables[0].Columns["lecturerName"].ToString();
+                comboBoxName.SelectedValuePath = ds.Tables[0].Columns["lecturerId"].ToString();
+
+                conn.Close();
+            }
+
+            
+
+
+            // string query = "select r.roomId, r.roomCode from dbo.Room r, dbo.Course c, dbo.Timetable t WHERE c.courseId = " + cId + " AND c.noOfStudents <= r.capacity AND t.day <> " + dayTextBox.Text  + " ORDER BY roomCode;";
+
+
+
+        }
+
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
             if(moduleCombobox.SelectedItem != null && roomCombobox.SelectedItem != null)
@@ -124,6 +160,26 @@ namespace TimetableCreationTool
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void lecturercomboBox_DropDownOpened(object sender, EventArgs e)
+        {
+            if(moduleCombobox.SelectedItem != null)
+            {
+                bindComboBox2(lecturercomboBox);
+            }
+            else
+            {
+                MessageBox.Show("Choose Module First");
+            }
+        }
+
+        private void moduleCombobox_DropDownOpened(object sender, EventArgs e)
+        {
+            if(lecturercomboBox.SelectedItem != null)
+            {
+                lecturercomboBox.SelectedIndex = -1;
+            }
         }
     }
 }

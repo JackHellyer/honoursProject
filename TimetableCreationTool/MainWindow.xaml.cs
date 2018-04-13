@@ -82,6 +82,8 @@ namespace TimetableCreationTool
                         DataTable timetableCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "timetable.txt");
                         InsertDataTableToSQLTimetable(timetableCSV);
 
+                        DataTable lecturerModuleCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "lecturermodules.txt");
+                        InsertDataTableToSQLlecturerModules(lecturerModuleCSV);
 
                         Window1 win1 = new Window1(tName);
                         win1.Show();
@@ -193,6 +195,44 @@ namespace TimetableCreationTool
                     {
                         // change this method later to have a string parameter which will hold the destination table
                         sbc.DestinationTableName = "Timetable";
+
+                        foreach (var column in csvFileData.Columns)
+
+                            sbc.ColumnMappings.Add(column.ToString(), column.ToString());
+                        sbc.WriteToServer(csvFileData);
+                        dbConnection.Close();
+
+
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("connection failed");
+                }
+
+
+
+
+
+            }
+        }
+
+        public void InsertDataTableToSQLlecturerModules(DataTable csvFileData)
+        {
+            using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
+            {
+
+
+                dbConnection.Open();
+                if (dbConnection.State == ConnectionState.Open)
+                {
+
+                    //MessageBox.Show("connection success");
+                    using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
+                    {
+                        // change this method later to have a string parameter which will hold the destination table
+                        sbc.DestinationTableName = "Lecturer_Module";
 
                         foreach (var column in csvFileData.Columns)
 
