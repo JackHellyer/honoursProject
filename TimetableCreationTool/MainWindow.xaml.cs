@@ -79,6 +79,8 @@ namespace TimetableCreationTool
 
                         DataTable courseModuleCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "coursemodules.txt");
                         InsertDataTableToSQL(courseModuleCSV);
+                        DataTable timetableCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "timetable.txt");
+                        InsertDataTableToSQLTimetable(timetableCSV);
 
 
                         Window1 win1 = new Window1(tName);
@@ -153,6 +155,44 @@ namespace TimetableCreationTool
                     {
                         // change this method later to have a string parameter which will hold the destination table
                         sbc.DestinationTableName = "Course_Module";
+
+                        foreach (var column in csvFileData.Columns)
+
+                            sbc.ColumnMappings.Add(column.ToString(), column.ToString());
+                        sbc.WriteToServer(csvFileData);
+                        dbConnection.Close();
+
+
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("connection failed");
+                }
+
+
+
+
+
+            }
+        }
+
+        public void InsertDataTableToSQLTimetable(DataTable csvFileData)
+        {
+            using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
+            {
+
+
+                dbConnection.Open();
+                if (dbConnection.State == ConnectionState.Open)
+                {
+
+                    //MessageBox.Show("connection success");
+                    using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
+                    {
+                        // change this method later to have a string parameter which will hold the destination table
+                        sbc.DestinationTableName = "Timetable";
 
                         foreach (var column in csvFileData.Columns)
 

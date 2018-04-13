@@ -38,6 +38,7 @@ namespace TimetableCreationTool
             timetableName = tName;
             this.Title = timetableName;
             bindComboBox(chooseCourse);
+            createExampleCSVFile("timetable.txt", "courseId, moduleId, roomId, day, time");
            
         }
         
@@ -57,6 +58,7 @@ namespace TimetableCreationTool
             saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
             saveDbToCSVFile("moduleCode,moduleName", "modules.txt", "dbo.Module");
             saveDbToCSVFile("courseId,moduleId", "coursemodules.txt", "dbo.Course_Module");
+            saveDbToCSVFile("courseId, moduleId, roomId, day, time", "timetable.txt", "dbo.Timetable");
 
         }
 
@@ -74,10 +76,6 @@ namespace TimetableCreationTool
             vr.Owner = this;
             vr.ShowDialog();
             //Window_Loaded(sender, e);
-
-
-
-
         }
 
         public void menuViewLecturers_Click(object sender, RoutedEventArgs e)
@@ -175,7 +173,7 @@ namespace TimetableCreationTool
             dbConnection.Close();
         }
 
-        public void truncateAllTables()
+        /*public void truncateAllTables()
         {
             string queryString = "TRUNCATE TABLE dbo.Course_Module; DELETE FROM dbo.Room DBCC CHECKIDENT ('timetableCreation.dbo.Room', RESEED, 0);  DELETE FROM dbo.Lecturer DBCC CHECKIDENT ('timetableCreation.dbo.Lecturer', RESEED, 0); DELETE FROM dbo.Course DBCC CHECKIDENT ('timetableCreation.dbo.Course', RESEED, 0); DELETE FROM dbo.Module DBCC CHECKIDENT ('timetableCreation.dbo.Module', RESEED, 0);";
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
@@ -190,7 +188,7 @@ namespace TimetableCreationTool
 
 
             }
-        }
+        }*/
 
         public void createDatatable(object sender,RoutedEventArgs e)
         {
@@ -229,11 +227,6 @@ namespace TimetableCreationTool
             dt.Rows.Add(dr5);
 
             dataGrid.ItemsSource = dt.DefaultView;
-
-            
-            
-
-
         }
 
         public void bindComboBox(ComboBox comboBoxName)
@@ -294,6 +287,7 @@ namespace TimetableCreationTool
                 saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
                 saveDbToCSVFile("moduleCode,moduleName", "modules.txt", "dbo.Module");
                 saveDbToCSVFile("courseId,moduleId", "coursemodules.txt", "dbo.Course_Module");
+                saveDbToCSVFile("courseId, moduleId, roomId, day, time", "timetable.txt", "dbo.Timetable");
             }
         }
 
@@ -349,6 +343,11 @@ namespace TimetableCreationTool
             }
 
             
+        }
+
+        private void assignLecturerButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

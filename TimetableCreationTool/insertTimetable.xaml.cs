@@ -87,24 +87,36 @@ namespace TimetableCreationTool
                 int courseId = int.Parse(cId);
                 int moduleId = int.Parse(moduleCombobox.SelectedValue.ToString());
                 int roomId = int.Parse(roomCombobox.SelectedValue.ToString());
-                
-                string query = "INSERT INTO Course_Module (courseId, moduleId) VALUES(" + courseId + "," + moduleId + ");";
-                string query2 = "INSERT dbo.Course_Module (courseId, moduleId) SELECT " + courseId + "," + moduleId + " WHERE NOT EXISTS( SELECT courseId, moduleId FROM dbo.Course_Module WHERE courseId = " + courseId + " AND moduleId = " + moduleId + ");";
+
+                //string query = "INSERT INTO Course_Module (courseId, moduleId) VALUES(" + courseId + "," + moduleId + ");";
+                //string query2 = "INSERT dbo.Course_Module (courseId, moduleId) SELECT " + courseId + "," + moduleId + " WHERE NOT EXISTS( SELECT courseId, moduleId FROM dbo.Course_Module WHERE courseId = " + courseId + " AND moduleId = " + moduleId + ");";
+
+                //"INSERT INTO dbo.Timetable (courseId, moduleId, roomId, day, time) VALUES(@courseId, @moduleId, @roomId, @day, @time);"
+                //INSERT dbo.Timetable(courseId, moduleId, roomId, day, time) SELECT @courseId, @moduleId, @roomId, @day, @time WHERE NOT EXISTS(SELECT courseId, moduleId, roomId, day, time FROM dbo.Timetable WHERE(courseId = @courseId AND moduleId = @moduleId) AND(roomId = @roomId AND day = @day AND time = @time));
 
 
-
-
-                SqlConnection conn = new SqlConnection(dbConnectionString);
+               SqlConnection conn = new SqlConnection(dbConnectionString);
                 conn.Open();
-                SqlCommand command = new SqlCommand("INSERT INTO dbo.Timetable (courseId, moduleId, roomId, day, time) VALUES(@courseId, @moduleId, @roomId, @day, @time);", conn);
+                SqlCommand command = new SqlCommand("INSERT dbo.Timetable(courseId, moduleId, roomId, day, time) SELECT @courseId, @moduleId, @roomId, @day, @time WHERE NOT EXISTS(SELECT courseId, moduleId, roomId, day, time FROM dbo.Timetable WHERE(roomId = @roomId AND day = @day AND time = @time));", conn);
                 command.Parameters.AddWithValue("@courseId", courseId);
                 command.Parameters.AddWithValue("@moduleId", moduleId);
                 command.Parameters.AddWithValue("@roomId", roomId);
                 command.Parameters.AddWithValue("@day", dayTextBox.Text);
                 command.Parameters.AddWithValue("@time", timeTextBox.Text);
+                int numOfRowsEffected = command.ExecuteNonQuery();
 
-                command.ExecuteNonQuery();
+                //command.ExecuteNonQuery();
+                //MessageBox.Show(numOfRowsEffected.ToString());
                 conn.Close();
+                if(numOfRowsEffected == 0)
+                {
+                    MessageBox.Show("Selected Room is in use at specified time and day");
+                }
+                else
+                {
+                    MessageBox.Show("Timeslot insert");
+                    this.Close();
+                }
             }
             
         }

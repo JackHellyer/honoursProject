@@ -48,7 +48,7 @@ namespace TimetableCreationTool
             this.moduleViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("moduleViewSource")));
             int intCId = int.Parse(cId);
 
-            var query2 = dbcontext.Modules.Where(m => m.Courses.Any(c => c.courseId == intCId));
+            //var query2 = dbcontext.Modules.Where(m => m.Courses.Any(c => c.courseId == intCId));
 
             var query = from Module in this.dbcontext.Modules
                         where Module.Courses.Any(c => c.courseId == intCId)
@@ -82,7 +82,7 @@ namespace TimetableCreationTool
             {
                 int courseId = int.Parse(cId);
                 int moduleId = int.Parse(comboBox.SelectedValue.ToString());
-                string query = "INSERT INTO Course_Module (courseId, moduleId) VALUES(" + courseId + "," + moduleId +");";
+                //string query = "INSERT INTO Course_Module (courseId, moduleId) VALUES(" + courseId + "," + moduleId +");";
                 string query2 = "INSERT dbo.Course_Module (courseId, moduleId) SELECT " + courseId + "," +  moduleId + " WHERE NOT EXISTS( SELECT courseId, moduleId FROM dbo.Course_Module WHERE courseId = " + courseId + " AND moduleId = " + moduleId + ");";
 
                
