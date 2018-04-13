@@ -38,7 +38,7 @@ namespace TimetableCreationTool
             timetableName = tName;
             this.Title = timetableName;
             bindComboBox(chooseCourse);
-            createExampleCSVFile("timetable.txt", "courseId, moduleId, roomId, day, time");
+            createExampleCSVFile("timetable.txt", "courseId, moduleId, lecturerId, roomId, day, time");
            
         }
         
@@ -58,7 +58,7 @@ namespace TimetableCreationTool
             saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
             saveDbToCSVFile("moduleCode,moduleName", "modules.txt", "dbo.Module");
             saveDbToCSVFile("courseId,moduleId", "coursemodules.txt", "dbo.Course_Module");
-            saveDbToCSVFile("courseId, moduleId, roomId, day, time", "timetable.txt", "dbo.Timetable");
+            saveDbToCSVFile("courseId, moduleId, lecturerId, roomId, day, time", "timetable.txt", "dbo.Timetable");
 
         }
 
@@ -287,7 +287,7 @@ namespace TimetableCreationTool
                 saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
                 saveDbToCSVFile("moduleCode,moduleName", "modules.txt", "dbo.Module");
                 saveDbToCSVFile("courseId,moduleId", "coursemodules.txt", "dbo.Course_Module");
-                saveDbToCSVFile("courseId, moduleId, roomId, day, time", "timetable.txt", "dbo.Timetable");
+                saveDbToCSVFile("courseId, moduleId, lecturerId, roomId, day, time", "timetable.txt", "dbo.Timetable");
                 saveDbToCSVFile("lecturerId, moduleId", "lecturermodules.txt", "dbo.Lecturer_Module");
             }
         }

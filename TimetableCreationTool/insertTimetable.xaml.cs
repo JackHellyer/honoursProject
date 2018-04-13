@@ -123,6 +123,7 @@ namespace TimetableCreationTool
                 int courseId = int.Parse(cId);
                 int moduleId = int.Parse(moduleCombobox.SelectedValue.ToString());
                 int roomId = int.Parse(roomCombobox.SelectedValue.ToString());
+                int lecturerId = int.Parse(lecturercomboBox.SelectedValue.ToString());
 
                 //string query = "INSERT INTO Course_Module (courseId, moduleId) VALUES(" + courseId + "," + moduleId + ");";
                 //string query2 = "INSERT dbo.Course_Module (courseId, moduleId) SELECT " + courseId + "," + moduleId + " WHERE NOT EXISTS( SELECT courseId, moduleId FROM dbo.Course_Module WHERE courseId = " + courseId + " AND moduleId = " + moduleId + ");";
@@ -133,12 +134,13 @@ namespace TimetableCreationTool
 
                SqlConnection conn = new SqlConnection(dbConnectionString);
                 conn.Open();
-                SqlCommand command = new SqlCommand("INSERT dbo.Timetable(courseId, moduleId, roomId, day, time) SELECT @courseId, @moduleId, @roomId, @day, @time WHERE NOT EXISTS(SELECT courseId, moduleId, roomId, day, time FROM dbo.Timetable WHERE(roomId = @roomId AND day = @day AND time = @time));", conn);
+                SqlCommand command = new SqlCommand("INSERT dbo.Timetable(courseId, moduleId, lecturerId, roomId, day, time) SELECT @courseId, @moduleId, @lecturerId, @roomId, @day, @time WHERE NOT EXISTS(SELECT courseId, moduleId, lecturerId, roomId, day, time FROM dbo.Timetable WHERE(roomId = @roomId AND day = @day AND time = @time));", conn);
                 command.Parameters.AddWithValue("@courseId", courseId);
                 command.Parameters.AddWithValue("@moduleId", moduleId);
                 command.Parameters.AddWithValue("@roomId", roomId);
                 command.Parameters.AddWithValue("@day", dayTextBox.Text);
                 command.Parameters.AddWithValue("@time", timeTextBox.Text);
+                command.Parameters.AddWithValue("@lecturerId", lecturerId);
                 int numOfRowsEffected = command.ExecuteNonQuery();
 
                 //command.ExecuteNonQuery();

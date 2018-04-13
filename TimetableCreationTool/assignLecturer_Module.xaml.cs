@@ -35,7 +35,7 @@ namespace TimetableCreationTool
 
         public void bindComboBox(ComboBox comboBoxName)
         {
-            string query = "select lecturerId, CONCAT(lecturerName, ' ', lecturerDept) AS lectInfo from dbo.Lecturer ORDER BY lecturerName";
+            string query = "select lecturerId, CONCAT(lecturerName, ' (Dept) ', lecturerDept) AS lectInfo from dbo.Lecturer ORDER BY lecturerName";
             SqlConnection conn = new SqlConnection(dbConnectionString);
             conn.Open();
             SqlDataAdapter sda = new SqlDataAdapter(query, conn);
