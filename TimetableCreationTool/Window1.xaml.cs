@@ -292,7 +292,7 @@ namespace TimetableCreationTool
             }
         }
 
-        private int insertTodataGrid(string day, string time)
+        /*private int insertTodataGrid(string day, string time)
         {
             string query = "SELECT tId FROM Timetable WHERE courseId = @courseId AND day = @day AND time = @time;";
             int tId;
@@ -317,10 +317,11 @@ namespace TimetableCreationTool
                     }
                 }
             }
-        }
+        }*/
 
         private void chooseCourse_DropDownClosed(object sender, EventArgs e)
         {
+            
             if(chooseCourse.SelectedItem != null)
             {
                 dt.Clear();
@@ -428,33 +429,61 @@ namespace TimetableCreationTool
         private void dataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
 
-            
-            if(dataGrid.Items.IndexOf(dataGrid.CurrentItem)  < 5)
+
+            if (dataGrid.Items.IndexOf(dataGrid.CurrentItem) < 5)
             {
-                if(chooseCourse.SelectedItem != null)
+                if (chooseCourse.SelectedItem != null)
                 {
-                    int columnIndex = dataGrid.CurrentCell.Column.DisplayIndex;
+                    if (dataGrid.CurrentCell.Column != null)
+                    {
+                        int columnIndex = dataGrid.CurrentCell.Column.DisplayIndex;
 
-                    int rowIndex = dataGrid.Items.IndexOf(dataGrid.CurrentItem);
-                    DataRowView v = (DataRowView)dataGrid.Items[rowIndex];
-                    string day = (string)v[0];
-                    string timeString = (string)dataGrid.Columns[columnIndex].Header;
+                        int rowIndex = dataGrid.Items.IndexOf(dataGrid.CurrentItem);
+                        DataRowView v = (DataRowView)dataGrid.Items[rowIndex];
+                        string day = (string)v[0];
+                        string timeString = (string)dataGrid.Columns[columnIndex].Header;
 
-                    string cName = chooseCourse.Text;
-                    //MessageBox.Show((string)v.ToString());
-                    //MessageBox.Show(day + " and    " + timeString);
-                    string cId = chooseCourse.SelectedValue.ToString();
-                    insertTimetable it = new insertTimetable(day, timeString, cId, cName);
-                    it.ShowDialog();
+
+                        string cName = chooseCourse.Text;
+                        //MessageBox.Show((string)v.ToString());
+                        //MessageBox.Show(day + " and    " + timeString);
+                        string cId = chooseCourse.SelectedValue.ToString();
+
+
+                        string day2;
+                        string time;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                day2 = dr[0].ToString();
+                                time = dc.ColumnName.ToString();
+                                if ((day2 == day) && (time == timeString) && (dr[dc].ToString() == ""))
+                                {
+                                    insertTimetable it = new insertTimetable(day, timeString, cId, cName);
+                                    it.ShowDialog();
+                                }
+                                else
+                                {
+                                    //add dialog box to allow user to edit, maybe try drag and drop
+                                }
+                            }
+                        }
+                    }
+
+
+
+
                 }
                 else
                 {
                     MessageBox.Show("Must choose course");
                 }
-                
-            }
 
-            
+
+
+
+            }
         }
 
         private void assignLecturerButton_Click(object sender, RoutedEventArgs e)
