@@ -189,10 +189,10 @@ namespace TimetableCreationTool
 
             }
         }*/
-
-        public void createDatatable(object sender,RoutedEventArgs e)
+        DataTable dt = new DataTable();
+        public void createDatatable(object sender, RoutedEventArgs e)
         {
-            DataTable dt = new DataTable();
+            
             dt.Columns.Add("DayName");
             dt.Columns.Add("08:00");
             dt.Columns.Add("09:00");
@@ -292,6 +292,33 @@ namespace TimetableCreationTool
             }
         }
 
+        private int insertTodataGrid(string day, string time)
+        {
+            string query = "SELECT tId FROM Timetable WHERE courseId = @courseId AND day = @day AND time = @time;";
+            int tId;
+            using(var conn = new SqlConnection(dbConnectionString))
+            using (var cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@courseId", chooseCourse.SelectedValue.ToString());
+                cmd.Parameters.AddWithValue("@day", day);
+                cmd.Parameters.AddWithValue("@time", time);
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if(reader.Read())
+                    {
+                        tId = reader.GetInt32(reader.GetOrdinal("tId"));
+                        return tId;
+                    }
+                    else
+                    {
+                        tId = 0;
+                        return tId;
+                    }
+                }
+            }
+        }
+
         private void chooseCourse_DropDownClosed(object sender, EventArgs e)
         {
             if(chooseCourse.SelectedItem != null)
@@ -303,6 +330,48 @@ namespace TimetableCreationTool
 
                 addModulesStudied ams = new addModulesStudied(chooseCourse.Text, chooseCourse.SelectedValue.ToString());
                 ams.ShowDialog();
+                string day;
+                string time;
+
+                
+
+                foreach(DataRow dr in dt.Rows)
+                {
+                    foreach(DataColumn dc in dt.Columns)
+                    {
+                        day = dr[0].ToString();
+                        time = dc.ColumnName.ToString();
+                        //MessageBox.Show(day + " time: " + time);
+
+                        string query = "SELECT moduleId, roomId, lecturerId FROM Timetable WHERE courseId = @courseId AND day = @day AND time = @time;";
+                        int mId;
+                        int rId;
+                        int lId;
+                        using (var conn = new SqlConnection(dbConnectionString))
+                        using (var cmd = new SqlCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@courseId", chooseCourse.SelectedValue.ToString());
+                            cmd.Parameters.AddWithValue("@day", day);
+                            cmd.Parameters.AddWithValue("@time", time);
+                            conn.Open();
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    mId = reader.GetInt32(reader.GetOrdinal("moduleId"));
+                                    rId = reader.GetInt32(reader.GetOrdinal("roomId"));
+                                    //lId = reader.GetInt32(reader.GetOrdinal("lecturerId"));
+
+                                    dr[dc] = mId + "\n" + rId;
+                                }
+                                
+                                
+                            }
+                        }
+
+                        
+                    }
+                }
             }
             
 
