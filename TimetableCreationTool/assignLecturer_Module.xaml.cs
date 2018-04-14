@@ -22,7 +22,7 @@ namespace TimetableCreationTool
     public partial class assignLecturer_Module : Window
     {
         
-        private timetableCreationEntities2 dbcontext;
+        private timetableCreationEntities3 dbcontext;
         private System.Windows.Data.CollectionViewSource moduleViewSource;
         private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
 
@@ -96,7 +96,7 @@ namespace TimetableCreationTool
 
         public void onRefresh()
         {
-            this.dbcontext = new timetableCreationEntities2();
+            this.dbcontext = new timetableCreationEntities3();
             this.moduleViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("moduleViewSource")));
             if(lecturerComboBox.SelectedItem != null)
             {

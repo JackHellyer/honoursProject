@@ -24,12 +24,12 @@ namespace TimetableCreationTool
             InitializeComponent();
         }
 
-        private timetableCreationEntities2 dbcontext;
+        private timetableCreationEntities3 dbcontext;
         private System.Windows.Data.CollectionViewSource moduleViewSource;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.dbcontext = new timetableCreationEntities2();
+            this.dbcontext = new timetableCreationEntities3();
             this.moduleViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("moduleViewSource")));
 
             var query = from Module in this.dbcontext.Modules

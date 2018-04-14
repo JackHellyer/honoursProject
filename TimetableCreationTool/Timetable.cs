@@ -14,10 +14,10 @@ namespace TimetableCreationTool
     
     public partial class Timetable
     {
-        public int id { get; set; }
+        public int tId { get; set; }
         public int courseId { get; set; }
         public int moduleId { get; set; }
-        public Nullable<int> lecturerId { get; set; }
+        public int lecturerId { get; set; }
         public int roomId { get; set; }
         public string time { get; set; }
         public string day { get; set; }

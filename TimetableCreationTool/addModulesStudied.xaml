@@ -46,7 +46,7 @@
         <Button x:Name="addModules" Content="Add Modules" HorizontalAlignment="Left" Margin="141,245,0,0" VerticalAlignment="Top" Width="133" Click="addModules_Click"/>
         <Label x:Name="label" Content="Modules currently studied" HorizontalAlignment="Left" Margin="16,6,0,0" VerticalAlignment="Top" Width="171"/>
         <Button x:Name="deleteButton" Content="Delete Selected Module" HorizontalAlignment="Left" Margin="41,212,0,0" VerticalAlignment="Top" Width="206" Click="deleteButton_Click"/>
-        <Button x:Name="button" Content="Continue" HorizontalAlignment="Left" Margin="199,285,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="button" Content="Continue" HorizontalAlignment="Left" Margin="199,285,0,0" VerticalAlignment="Top" Width="75" IsDefault="True" Click="button_Click"/>
 
     </Grid>
 </Window>

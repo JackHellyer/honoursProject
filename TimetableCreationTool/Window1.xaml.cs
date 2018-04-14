@@ -323,12 +323,50 @@ namespace TimetableCreationTool
         {
             if(chooseCourse.SelectedItem != null)
             {
-                MessageBox.Show(chooseCourse.SelectedValue.ToString());
+                dt.Clear();
+
+                /*dt.Columns.Add("DayName");
+                dt.Columns.Add("08:00");
+                dt.Columns.Add("09:00");
+                dt.Columns.Add("10:00");
+                dt.Columns.Add("11:00");
+                dt.Columns.Add("12:00");
+                dt.Columns.Add("13:00");
+                dt.Columns.Add("14:00");
+                dt.Columns.Add("15:00");
+                dt.Columns.Add("16:00");
+                dt.Columns.Add("17:00");*/
+
+                DataRow dr1 = dt.NewRow();
+                dr1["DayName"] = "Monday";
+                dt.Rows.Add(dr1);
+
+                DataRow dr2 = dt.NewRow();
+                dr2["DayName"] = "Tuesday";
+                dt.Rows.Add(dr2);
+
+                DataRow dr3 = dt.NewRow();
+                dr3["DayName"] = "Wednesday";
+                dt.Rows.Add(dr3);
+
+
+                DataRow dr4 = dt.NewRow();
+                dr4["DayName"] = "Thursday";
+                dt.Rows.Add(dr4);
+
+                DataRow dr5 = dt.NewRow();
+                dr5["DayName"] = "Friday";
+                dt.Rows.Add(dr5);
+
+                dataGrid.ItemsSource = dt.DefaultView;
+
+               // MessageBox.Show(chooseCourse.SelectedValue.ToString());
                 string fileName = "coursemodules.txt";
                 string tableColumns = "courseId,moduleId";
                 createExampleCSVFile(fileName, tableColumns);
 
                 addModulesStudied ams = new addModulesStudied(chooseCourse.Text, chooseCourse.SelectedValue.ToString());
+                ams.Owner = this;
                 ams.ShowDialog();
                 string day;
                 string time;
@@ -343,10 +381,12 @@ namespace TimetableCreationTool
                         time = dc.ColumnName.ToString();
                         //MessageBox.Show(day + " time: " + time);
 
-                        string query = "SELECT moduleId, roomId, lecturerId FROM Timetable WHERE courseId = @courseId AND day = @day AND time = @time;";
-                        int mId;
-                        int rId;
-                        int lId;
+                        string query = "SELECT m.moduleName, r.roomCode, l.lecturerName FROM Timetable t, Module m, Room r, Lecturer l WHERE t.moduleId = m.moduleId AND t.roomId = r.roomId AND t.lecturerId = l.lecturerId AND courseId = @courseId AND day = @day AND time = @time;";
+                        string mName;
+                        string rCode;
+                        string lName;
+                        //string mName;
+                        //string rCode;
                         using (var conn = new SqlConnection(dbConnectionString))
                         using (var cmd = new SqlCommand(query, conn))
                         {
@@ -358,11 +398,13 @@ namespace TimetableCreationTool
                             {
                                 if (reader.Read())
                                 {
-                                    mId = reader.GetInt32(reader.GetOrdinal("moduleId"));
-                                    rId = reader.GetInt32(reader.GetOrdinal("roomId"));
-                                    //lId = reader.GetInt32(reader.GetOrdinal("lecturerId"));
+                                    mName = reader.GetString(reader.GetOrdinal("moduleName"));
+                                    rCode = reader.GetString(reader.GetOrdinal("roomCode"));
+                                    lName = reader.GetString(reader.GetOrdinal("lecturerName"));
+                                    //line below inserts into cell
+                                    dr[dc] = " Module: " + mName + "\n Room:    " + rCode + "\n Lecturer: " + lName;
 
-                                    dr[dc] = mId + "\n" + rId;
+                                    
                                 }
                                 
                                 

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="timetableCreationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="timetableCreationModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="courseId" />
@@ -103,12 +103,15 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
         </EntityType>
         <EntityType Name="Timetable">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="tId" />
+            <PropertyRef Name="courseId" />
+            <PropertyRef Name="moduleId" />
+            <PropertyRef Name="roomId" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="tId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="courseId" Type="int" Nullable="false" />
           <Property Name="moduleId" Type="int" Nullable="false" />
-          <Property Name="lecturerId" Type="int" />
+          <Property Name="lecturerId" Type="int" Nullable="false" />
           <Property Name="roomId" Type="int" Nullable="false" />
           <Property Name="time" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="day" Type="varchar" MaxLength="9" Nullable="false" />
@@ -139,7 +142,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Lecturer">
-          <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="0..1" />
+          <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="1" />
           <End Role="Timetable" Type="Self.Timetable" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Lecturer">
@@ -198,7 +201,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="timetableCreationModelStoreContainer">
+        <EntityContainer Name="timetableCreationModel1StoreContainer">
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Course_Module" EntityType="Self.Course_Module" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lecturer" EntityType="Self.Lecturer" Schema="dbo" store:Type="Tables" />
@@ -266,7 +269,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="timetableCreationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="timetableCreationModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="courseId" />
@@ -310,12 +313,15 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
         </EntityType>
         <EntityType Name="Timetable">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="tId" />
+            <PropertyRef Name="courseId" />
+            <PropertyRef Name="moduleId" />
+            <PropertyRef Name="roomId" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="tId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="courseId" Type="Int32" Nullable="false" />
           <Property Name="moduleId" Type="Int32" Nullable="false" />
-          <Property Name="lecturerId" Type="Int32" />
+          <Property Name="lecturerId" Type="Int32" Nullable="false" />
           <Property Name="roomId" Type="Int32" Nullable="false" />
           <Property Name="time" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="day" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
@@ -375,7 +381,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Lecturer">
-          <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="0..1" />
+          <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="1" />
           <End Role="Timetable" Type="Self.Timetable" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Lecturer">
@@ -406,7 +412,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
           <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="*" />
           <End Role="Module" Type="Self.Module" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="timetableCreationEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="timetableCreationEntities3" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Courses" EntityType="Self.Course" />
           <EntitySet Name="Lecturers" EntityType="Self.Lecturer" />
           <EntitySet Name="Modules" EntityType="Self.Module" />
@@ -442,9 +448,9 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="timetableCreationModelStoreContainer" CdmEntityContainer="timetableCreationEntities2">
+        <EntityContainerMapping StorageEntityContainer="timetableCreationModel1StoreContainer" CdmEntityContainer="timetableCreationEntities3">
           <EntitySetMapping Name="Courses">
-            <EntityTypeMapping TypeName="timetableCreationModel.Course">
+            <EntityTypeMapping TypeName="timetableCreationModel1.Course">
               <MappingFragment StoreEntitySet="Course">
                 <ScalarProperty Name="courseId" ColumnName="courseId" />
                 <ScalarProperty Name="courseCode" ColumnName="courseCode" />
@@ -454,7 +460,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Lecturers">
-            <EntityTypeMapping TypeName="timetableCreationModel.Lecturer">
+            <EntityTypeMapping TypeName="timetableCreationModel1.Lecturer">
               <MappingFragment StoreEntitySet="Lecturer">
                 <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
                 <ScalarProperty Name="lecturerName" ColumnName="lecturerName" />
@@ -463,7 +469,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Modules">
-            <EntityTypeMapping TypeName="timetableCreationModel.Module">
+            <EntityTypeMapping TypeName="timetableCreationModel1.Module">
               <MappingFragment StoreEntitySet="Module">
                 <ScalarProperty Name="moduleId" ColumnName="moduleId" />
                 <ScalarProperty Name="moduleCode" ColumnName="moduleCode" />
@@ -472,7 +478,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Rooms">
-            <EntityTypeMapping TypeName="timetableCreationModel.Room">
+            <EntityTypeMapping TypeName="timetableCreationModel1.Room">
               <MappingFragment StoreEntitySet="Room">
                 <ScalarProperty Name="roomId" ColumnName="roomId" />
                 <ScalarProperty Name="roomCode" ColumnName="roomCode" />
@@ -482,9 +488,9 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Timetables">
-            <EntityTypeMapping TypeName="timetableCreationModel.Timetable">
+            <EntityTypeMapping TypeName="timetableCreationModel1.Timetable">
               <MappingFragment StoreEntitySet="Timetable">
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tId" ColumnName="tId" />
                 <ScalarProperty Name="courseId" ColumnName="courseId" />
                 <ScalarProperty Name="moduleId" ColumnName="moduleId" />
                 <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
@@ -496,7 +502,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="courseTemps">
-            <EntityTypeMapping TypeName="timetableCreationModel.courseTemp">
+            <EntityTypeMapping TypeName="timetableCreationModel1.courseTemp">
               <MappingFragment StoreEntitySet="courseTemp">
                 <ScalarProperty Name="courseCode" ColumnName="courseCode" />
                 <ScalarProperty Name="courseName" ColumnName="courseName" />
@@ -505,7 +511,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="lecturerTemps">
-            <EntityTypeMapping TypeName="timetableCreationModel.lecturerTemp">
+            <EntityTypeMapping TypeName="timetableCreationModel1.lecturerTemp">
               <MappingFragment StoreEntitySet="lecturerTemp">
                 <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
                 <ScalarProperty Name="lecturerName" ColumnName="lecturerName" />
@@ -514,7 +520,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="moduleTemps">
-            <EntityTypeMapping TypeName="timetableCreationModel.moduleTemp">
+            <EntityTypeMapping TypeName="timetableCreationModel1.moduleTemp">
               <MappingFragment StoreEntitySet="moduleTemp">
                 <ScalarProperty Name="moduleCode" ColumnName="moduleCode" />
                 <ScalarProperty Name="moduleName" ColumnName="moduleName" />
@@ -522,7 +528,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="roomTemps">
-            <EntityTypeMapping TypeName="timetableCreationModel.roomTemp">
+            <EntityTypeMapping TypeName="timetableCreationModel1.roomTemp">
               <MappingFragment StoreEntitySet="roomTemp">
                 <ScalarProperty Name="roomCode" ColumnName="roomCode" />
                 <ScalarProperty Name="capacity" ColumnName="capacity" />
@@ -530,7 +536,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Course_Module" TypeName="timetableCreationModel.Course_Module" StoreEntitySet="Course_Module">
+          <AssociationSetMapping Name="Course_Module" TypeName="timetableCreationModel1.Course_Module" StoreEntitySet="Course_Module">
             <EndProperty Name="Course">
               <ScalarProperty Name="courseId" ColumnName="courseId" />
             </EndProperty>
@@ -538,7 +544,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
               <ScalarProperty Name="moduleId" ColumnName="moduleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Lecturer_Module" TypeName="timetableCreationModel.Lecturer_Module" StoreEntitySet="Lecturer_Module">
+          <AssociationSetMapping Name="Lecturer_Module" TypeName="timetableCreationModel1.Lecturer_Module" StoreEntitySet="Lecturer_Module">
             <EndProperty Name="Lecturer">
               <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
             </EndProperty>

@@ -13,10 +13,10 @@ namespace TimetableCreationTool
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class timetableCreationEntities2 : DbContext
+    public partial class timetableCreationEntities3 : DbContext
     {
-        public timetableCreationEntities2()
-            : base("name=timetableCreationEntities2")
+        public timetableCreationEntities3()
+            : base("name=timetableCreationEntities3")
         {
         }
     
