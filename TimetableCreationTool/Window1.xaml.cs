@@ -493,5 +493,25 @@ namespace TimetableCreationTool
             alm.ShowDialog();
             createExampleCSVFile("lecturermodules.txt", "lecturerId, moduleId");
         }
+
+        private void dataGrid_DragOver(object sender, DragEventArgs e)
+        {
+            
+        }
+
+        private void dataGrid_DragEnter(object sender, DragEventArgs e)
+        {
+            MessageBox.Show("test");
+        }
+
+        private void dataGrid_DragLeave(object sender, DragEventArgs e)
+        {
+            MessageBox.Show("test drag leave");
+        }
+
+        private void dataGrid_DragLeave_1(object sender, DragEventArgs e)
+        {
+            MessageBox.Show("test drag leave");
+        }
     }
 }
